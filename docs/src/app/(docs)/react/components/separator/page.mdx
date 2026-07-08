@@ -21,6 +21,14 @@ import { Separator } from '@base-ui/react/separator';
 <Separator />;
 ```
 
+## Accessibility
+
+- **Role**: `<Separator>` always renders `role="separator"`, with `aria-orientation` reflecting the `orientation` prop.
+- **Not focusable**: a separator has no keyboard interaction.
+- **Use only for semantic dividers**: `role="separator"` tells assistive technology the divider is meaningful structure, not decoration. If a divider is purely visual—for example, a line used only for spacing—override the role with `role="none"` via the `render` prop, or hide it with `aria-hidden="true"`, so it isn't announced as structure that doesn't exist.
+
+This pattern follows the [ARIA `separator` role](https://www.w3.org/WAI/ARIA/apg/patterns/separator/).
+
 ## API reference
 
 import { TypesSeparator } from './types';

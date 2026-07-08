@@ -125,6 +125,19 @@ import { DemoOTPFieldPassword } from './demos/password';
 
 <DemoOTPFieldPassword />
 
+## Accessibility
+
+- **Role**: `<OTPField.Root>` renders `role="group"`.
+- **Keyboard interactions** (roving tabindex across slots):
+  - <kbd>ArrowLeft</kbd> / <kbd>ArrowRight</kbd> — move to the previous/next slot; hold
+    <kbd>Ctrl</kbd>/<kbd>Cmd</kbd> to jump to the first/last slot.
+  - <kbd>Home</kbd> / <kbd>End</kbd> — jump to the first slot / the first empty slot (or the last
+    slot if complete).
+  - <kbd>Backspace</kbd> — clears the current slot and moves to the previous one; <kbd>Ctrl</kbd>/
+    <kbd>Cmd</kbd>+<kbd>Backspace</kbd> clears all slots.
+  - Typing fills a slot and advances; pasting a full code distributes it across all slots.
+- **Labeling**: see [Labeling an OTP field](#labeling-an-otp-field) above—the first slot takes its accessible name from the field-level label (its own `aria-label` is ignored, with a dev warning), while each remaining slot needs its own `aria-label` identifying its position.
+
 ## API reference
 
 import { TypesOTPField } from './types';

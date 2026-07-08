@@ -23,6 +23,14 @@ import { Collapsible } from '@base-ui/react/collapsible';
 </Collapsible.Root>;
 ```
 
+## Accessibility
+
+- **Keyboard interactions**: <kbd>Enter</kbd> / <kbd>Space</kbd> toggles the panel open or closed when the trigger is focused.
+- **ARIA attributes**: `<Collapsible.Trigger>` carries `aria-expanded`, reflecting the panel's open state, and `aria-controls`, pointing at the panel's `id` while it's open.
+- **Labeling**: the trigger needs its own accessible name (visible text or `aria-label`)—the panel itself isn't automatically labelled, so if it needs one, point an `aria-labelledby` at the trigger manually.
+
+This pattern loosely follows the [ARIA APG Disclosure pattern](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/).
+
 ## API reference
 
 import { TypesCollapsible } from './types';

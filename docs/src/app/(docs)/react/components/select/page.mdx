@@ -224,6 +224,22 @@ import { DemoSelectGrouped } from './demos/grouped';
 
 <DemoSelectGrouped />
 
+## Accessibility
+
+- **Role**: `<Select.Trigger>` renders `role="combobox"`; the open popup's list renders `role="listbox"`, with each `<Select.Item>` as `role="option"`.
+- **Keyboard interactions**:
+  - <kbd>Enter</kbd> / <kbd>Space</kbd> / <kbd>ArrowDown</kbd> — opens the popup from the trigger.
+  - <kbd>ArrowUp</kbd> / <kbd>ArrowDown</kbd> — move the highlight between options once open.
+  - <kbd>Home</kbd> / <kbd>End</kbd> — jump to the first/last option.
+  - <kbd>Enter</kbd> / <kbd>Space</kbd> — selects the highlighted option; in `multiple` mode, this
+    toggles the option and keeps the popup open.
+  - <kbd>Escape</kbd> — closes the popup.
+  - Typing jumps to a matching option, and while the trigger is closed, commits that option's value directly without opening the popup.
+- **ARIA attributes**: selected options get `aria-selected="true"`; the listbox gets `aria-multiselectable="true"` in `multiple` mode.
+- **Labeling**: see [Usage guidelines](#usage-guidelines) above—prefer `<Select.Label>`, which also handles [Labeling a select](#labeling-a-select) above.
+
+This pattern follows the [ARIA APG Select-Only Combobox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-select-only/).
+
 ## API reference
 
 import { TypesSelect } from './types';

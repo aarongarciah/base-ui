@@ -288,6 +288,22 @@ import { DemoDialogDetachedTriggersControlled } from './demos/detached-triggers-
 
 <DemoDialogDetachedTriggersControlled />
 
+## Accessibility
+
+- **Role**: `<Dialog.Popup>` renders `role="dialog"`.
+- **Labeling**: `<Dialog.Title>` provides the popup's accessible name through `aria-labelledby`, and `<Dialog.Description>` provides its accessible description through `aria-describedby`. Always render a title, even if it's visually hidden.
+- **Keyboard interactions**:
+  - <kbd>Tab</kbd> / <kbd>Shift+Tab</kbd> — when `modal` is `true` (the default) or `'trap-focus'`,
+    cycles focus between the popup's focusable elements without leaving it.
+  - <kbd>Escape</kbd> — requests to close the dialog. This can be canceled in `onOpenChange`, for
+    example to show a confirmation dialog instead—see [Close confirmation](#close-confirmation)
+    below.
+  - <kbd>Enter</kbd> / <kbd>Space</kbd> — activates the focused trigger or button.
+- **Focus management**: opening the dialog moves focus to its first focusable element (or to the popup itself on touch, to avoid triggering the virtual keyboard). Closing it returns focus to the trigger that opened it. Render `<Dialog.Close>` inside the popup so touch screen reader users always have a way to dismiss it when `modal` traps focus.
+- **Non-modal dialogs**: setting `modal={false}` removes the focus trap and lets the rest of the page stay interactive—use this only when the dialog's content doesn't require the user's full attention.
+
+This pattern follows the [ARIA APG Dialog (Modal) pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/).
+
 ## API reference
 
 import { TypesDialog } from './types';

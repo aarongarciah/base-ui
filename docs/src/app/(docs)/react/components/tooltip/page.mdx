@@ -210,6 +210,19 @@ import { DemoTooltipDetachedTriggersFull } from './demos/detached-triggers-full'
 
 <DemoTooltipDetachedTriggersFull />
 
+## Accessibility
+
+- **Role**: `<Tooltip.Popup>` renders `role="tooltip"`.
+- **Accessible description**: while open, `<Tooltip.Trigger>` references the popup through `aria-describedby`, so its content is announced as a description right after the trigger's own accessible name.
+- **Keyboard interactions**:
+  - <kbd>Tab</kbd> — moving focus onto the trigger opens the tooltip; moving focus away from it
+    closes the tooltip.
+  - <kbd>Escape</kbd> — dismisses the open tooltip.
+- **Focus management**: the tooltip itself never receives focus. It opens on hover or on keyboard focus of the trigger and closes on blur, so it never interrupts the tab sequence.
+- **Labeling the trigger**: the trigger must always carry its own accessible name—visible text, or `aria-label` for icon-only triggers. The tooltip is a supplementary description via `aria-describedby`, not a replacement for that name. See [Usage guidelines](#usage-guidelines) above.
+
+This pattern loosely follows the [ARIA APG Tooltip pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/).
+
 ## API reference
 
 import { TypesTooltip } from './types';

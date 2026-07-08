@@ -93,6 +93,14 @@ Use `<Tabs.List>`'s `render` prop to render `<ScrollArea.Viewport>` directly whe
 </Tabs.Root>
 ```
 
+## Accessibility
+
+- **`<ScrollArea.Viewport>` is the real, native scroll container**: the custom scrollbar and thumb are visual only and don't accept keyboard input—dragging the thumb or clicking the track are pointer-only interactions.
+- **Keyboard interactions**: when the content overflows, the viewport itself is focusable (`tabIndex={0}`), so keyboard users can tab to it and scroll with arrow keys, <kbd>Page Up</kbd> / <kbd>Page Down</kbd>, <kbd>Home</kbd> / <kbd>End</kbd>, and <kbd>Space</kbd>—the same as any native scrollable region. When there's nothing to scroll, the viewport is removed from the tab order.
+- **Labeling**: the viewport has no built-in accessible name. If the scrollable region needs one (for example, when it isn't otherwise described by surrounding content), add `aria-label` or `aria-labelledby` to `<ScrollArea.Viewport>`.
+
+This keeps the scrollable region reachable and operable by keyboard, per [WCAG 2.2 — Keyboard (2.1.1)](https://www.w3.org/WAI/WCAG22/Understanding/keyboard.html).
+
 ## API reference
 
 import { TypesScrollArea } from './types';

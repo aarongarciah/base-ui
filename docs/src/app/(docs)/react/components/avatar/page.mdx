@@ -23,6 +23,13 @@ import { Avatar } from '@base-ui/react/avatar';
 </Avatar.Root>;
 ```
 
+## Accessibility
+
+- **No ARIA is applied automatically**: Avatar is purely presentational—`<Avatar.Root>` renders a `<span>` and `<Avatar.Fallback>` a `<span>`, neither with a role. `<Avatar.Image>` is a native `<img>`, so it's still announced as an image once loaded.
+- **Provide `alt` on `<Avatar.Image>`**: use text that identifies who or what the avatar represents (for example, a person's name), or `alt=""` if the avatar is purely decorative next to a visible name.
+- **Fallback text is not an accessible name for the image**: when the image fails to load or has no `src`, `<Avatar.Fallback>` renders its own visible content (such as initials) instead of the image—it doesn't get announced as the `<img>`'s description.
+- If the avatar sits inside a link or button that performs an action, label that control directly with visible text or `aria-label` rather than relying on the avatar.
+
 ## API reference
 
 import { TypesAvatar } from './types';

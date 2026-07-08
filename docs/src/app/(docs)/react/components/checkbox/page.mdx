@@ -87,6 +87,18 @@ Use [Field](/react/components/field) to handle label associations and form integ
 </Form>
 ```
 
+## Accessibility
+
+- **Role**: `<Checkbox.Root>` renders `role="checkbox"` on its visible control (a `<span>` by default, or a `<button>` with `nativeButton`); a hidden native `<input type="checkbox">` handles form submission and is excluded from the accessibility tree.
+- **Keyboard interactions**:
+  - <kbd>Space</kbd> — toggles the checked state.
+  - <kbd>Enter</kbd> — does not toggle the checkbox, matching native checkbox behavior; it may
+    submit an enclosing form instead.
+- **ARIA attributes**: `aria-checked` reflects `true`, `false`, or `"mixed"` when `indeterminate`. `<Checkbox.Indicator>` is purely presentational—state is conveyed through `aria-checked`, not the indicator's visibility.
+- **Labeling**: see [Labeling a checkbox](#labeling-a-checkbox) above—the accessible name comes from an enclosing `<label>`, a sibling `<label htmlFor>` paired with `nativeButton`, or `Field.Label`.
+
+This pattern follows the [ARIA APG Checkbox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/).
+
 ## API reference
 
 import { TypesCheckbox } from './types';

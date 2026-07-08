@@ -56,6 +56,20 @@ import { Menu } from '@base-ui/react/menu';
 </Menubar>;
 ```
 
+## Accessibility
+
+- **Role**: `<Menubar>` renders `role="menubar"`, with `aria-orientation` reflecting the `orientation` prop. Each `<Menu.Trigger>` inside it renders `role="menuitem"` instead of the standalone button role it would have outside a menubar.
+- **Keyboard interactions**:
+  - <kbd>ArrowLeft</kbd> / <kbd>ArrowRight</kbd> (or <kbd>ArrowUp</kbd> / <kbd>ArrowDown</kbd> when
+    `orientation="vertical"`) — move focus between top-level triggers; focusing a trigger doesn't
+    open its menu.
+  - <kbd>Home</kbd> / <kbd>End</kbd> — jump to the first/last trigger.
+  - <kbd>Enter</kbd> / <kbd>Space</kbd> — opens the focused trigger's menu.
+  - Once a menu is open, the rest of [Menu's keyboard interactions](/react/components/menu#accessibility) apply, including using <kbd>ArrowRight</kbd> / <kbd>ArrowLeft</kbd> to move to the next menubar item and open its menu.
+- **Labeling**: each top-level trigger needs discernible text (for example, "File", "Edit").
+
+This pattern follows the [ARIA APG Menubar pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/).
+
 ## API reference
 
 import { TypesMenubar } from './types';

@@ -96,6 +96,17 @@ return (
 )
 ```
 
+## Accessibility
+
+- **Role**: `<Toolbar.Root>` renders `role="toolbar"` with `aria-orientation` reflecting the `orientation` prop; `<Toolbar.Group>` renders `role="group"`.
+- **Keyboard interactions** (roving tabindex across all items, including nested toggle groups):
+  - <kbd>ArrowLeft</kbd> / <kbd>ArrowRight</kbd> (or <kbd>ArrowUp</kbd> / <kbd>ArrowDown</kbd> when vertical) — move focus between items, looping by default. See [Usage guidelines](#usage-guidelines) above for why `<Toolbar.Input>` should be used sparingly and placed last.
+  - <kbd>Tab</kbd> — enters or leaves the toolbar entirely; it isn't trapped.
+  - Each item otherwise activates with its own native behavior (click, <kbd>Enter</kbd>, <kbd>Space</kbd>).
+- **Labeling**: the toolbar needs its own accessible name via `aria-label` or `aria-labelledby`—this isn't applied automatically. Each button, link, or input inside it needs its own visible text or `aria-label`.
+
+This pattern follows the [ARIA APG Toolbar pattern](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/).
+
 ## API reference
 
 import { TypesToolbar } from './types';

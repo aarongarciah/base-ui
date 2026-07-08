@@ -189,6 +189,20 @@ const SuggestionItem = React.memo(function SuggestionItem({ item }: { item: Sugg
 </Autocomplete.List>;
 ```
 
+## Accessibility
+
+- **Role**: `<Autocomplete.Input>` renders `role="combobox"`, and `<Autocomplete.List>` renders `role="listbox"` (or `role="grid"` in grid layouts).
+- **Virtual focus**: focus stays on the input while navigating the list. The highlighted item is communicated through `aria-activedescendant` on the input rather than by moving DOM focus, so items never receive `aria-selected`—Autocomplete doesn't track a persisted selection the way [Combobox](/react/components/combobox#accessibility) does.
+- **Keyboard interactions**:
+  - <kbd>ArrowDown</kbd> / <kbd>ArrowUp</kbd> — opens the popup if closed, then moves the highlight
+    between items, looping by default.
+  - <kbd>Enter</kbd> — fills the input with the highlighted item.
+  - <kbd>Escape</kbd> — closes the popup.
+  - Typing filters the list; `mode` controls the value of `aria-autocomplete` (`list`, `both`, `inline`, or `none`).
+- **Labeling**: the input needs an accessible name via `<label>`, `Field`, or `aria-label`—see [Usage guidelines](#usage-guidelines) above. `<Autocomplete.GroupLabel>` names its `<Autocomplete.Group>` through `aria-labelledby`. Keep `<Autocomplete.Status>` and `<Autocomplete.Empty>` mounted—they're `aria-live="polite"` regions that announce result counts and empty states.
+
+This pattern loosely follows the [ARIA APG Combobox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/).
+
 ## API reference
 
 import { TypesAutocomplete } from './types';

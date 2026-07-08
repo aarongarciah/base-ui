@@ -185,6 +185,15 @@ import { DemoPreviewCardDetachedTriggersFull } from './demos/detached-triggers-f
 
 <DemoPreviewCardDetachedTriggersFull />
 
+## Accessibility
+
+- **No dialog semantics**: `<PreviewCard.Popup>` renders without a role or any `aria-*` relationship to the trigger, and it's never focused—the preview is never announced to screen readers, by design. See [Usage guidelines](#usage-guidelines) above for why the same information must remain reachable at the link destination.
+- **Keyboard interactions**:
+  - <kbd>Tab</kbd> — focusing the trigger opens the preview after a delay (default 600ms); moving
+    focus away closes it (after a delay, default 300ms).
+  - <kbd>Escape</kbd> — closes the open preview.
+- The trigger itself is a plain link (`<PreviewCard.Trigger>` renders `<a>`), so it needs no additional labeling beyond ordinary link text.
+
 ## API reference
 
 import { TypesPreviewCard } from './types';
@@ -244,7 +253,6 @@ export const metadata = {
     'URL Preview',
     'Link Preview Popup',
     'Content Preview',
-    'Accessible Preview Popup',
     'Detached Trigger Preview Card',
     'Multiple Preview Card Triggers',
     'Animated Preview Card',

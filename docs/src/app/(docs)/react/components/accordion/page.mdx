@@ -37,6 +37,20 @@ import { DemoAccordionMultiple } from './demos/multiple';
 
 <DemoAccordionMultiple />
 
+## Accessibility
+
+- **Roles**: `<Accordion.Header>` renders an `<h3>` so panels sit in the page's heading structure, and `<Accordion.Panel>` renders `role="region"`, named by its trigger through `aria-labelledby`.
+- **Keyboard interactions**:
+  - <kbd>Enter</kbd> / <kbd>Space</kbd> — toggles the focused trigger's panel open or closed.
+  - <kbd>Tab</kbd> / <kbd>Shift+Tab</kbd> — moves between triggers in the normal tab order. There's
+    no arrow-key navigation or roving tabindex between headers, following the [current APG
+    guidance](https://github.com/w3c/aria-practices/pull/3434) that accordions don't need composite
+    keyboard behavior.
+- **ARIA attributes**: each trigger carries `aria-expanded` reflecting its panel's open state, and `aria-controls` pointing at the panel's `id` while it's open.
+- **Labeling**: the trigger's text (or `aria-label`) becomes the panel's accessible name through `aria-labelledby`—no extra labeling is needed on the panel itself.
+
+This pattern follows the [ARIA APG Accordion pattern](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/).
+
 ## API reference
 
 import { TypesAccordion } from './types';

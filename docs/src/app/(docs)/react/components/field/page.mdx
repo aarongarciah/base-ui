@@ -28,6 +28,13 @@ import { Field } from '@base-ui/react/field';
 </Field.Root>;
 ```
 
+## Accessibility
+
+- **Automatic ARIA wiring**: `<Field.Control>` receives `aria-labelledby` from `<Field.Label>`, `aria-describedby` from `<Field.Description>` and any visible `<Field.Error>`, and `aria-invalid` from validation state—all kept in sync as parts mount, unmount, or change. Other Base UI controls placed inside `<Field.Root>` (Checkbox, Select, Switch, Slider, and so on) receive the same wiring.
+- **Labeling**: `<Field.Label>` renders a native `<label>` by default (`nativeLabel`), so clicking it focuses the control without any extra plumbing; set `nativeLabel={false}` for controls that aren't native form elements, such as `Select.Trigger` or `Combobox.Trigger`, where a native label's click behavior doesn't apply.
+- **Validation timing**: `aria-invalid` is only set once a field is actually invalid, driven by `validationMode` (`onSubmit` by default, or `onBlur` / `onChange`)—it isn't set while a disabled field would otherwise be invalid, since disabled controls are excluded from validation.
+- `<Field.Item>` wraps per-option labels for checkbox and radio groups so each option gets its own accessible name inside the group.
+
 ## API reference
 
 import { TypesField } from './types';

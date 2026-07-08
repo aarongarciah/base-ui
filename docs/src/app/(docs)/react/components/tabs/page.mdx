@@ -50,6 +50,22 @@ import Link from 'next/link';
 </Tabs.Root>;
 ```
 
+## Accessibility
+
+- **Role**: `<Tabs.List>` renders `role="tablist"`, each `<Tabs.Tab>` renders `role="tab"`, and each `<Tabs.Panel>` renders `role="tabpanel"`.
+- **Keyboard interactions** (roving tabindex across tabs):
+  - <kbd>ArrowLeft</kbd> / <kbd>ArrowRight</kbd> (horizontal) or <kbd>ArrowUp</kbd> /
+    <kbd>ArrowDown</kbd> (vertical) — move focus between tabs, looping by default.
+  - <kbd>Home</kbd> / <kbd>End</kbd> — jump to the first/last tab.
+  - <kbd>Enter</kbd> / <kbd>Space</kbd> — activates the focused tab. By default (`activateOnFocus=
+    {false}`), moving focus doesn't select a tab until one of these keys is pressed—the [manual
+    activation](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/#keyboardinteraction) pattern. Set
+    `activateOnFocus={true}` for automatic activation, where arrow keys select as they move focus.
+- **ARIA attributes**: the active tab gets `aria-selected="true"` and `aria-controls` pointing at its panel; the panel gets `aria-labelledby` pointing back at the tab.
+- **Labeling**: `<Tabs.List>` needs its own accessible name via `aria-label` or `aria-labelledby`; each tab's name comes from its visible text or `aria-label`.
+
+This pattern follows the [ARIA APG Tabs pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/).
+
 ## API reference
 
 import { TypesTabs } from './types';

@@ -87,6 +87,15 @@ Use [Field](/react/components/field) to handle label associations and form integ
 </Form>
 ```
 
+## Accessibility
+
+- **Role**: `<Switch.Root>` renders `role="switch"` on its visible control (a `<span>` by default, or a `<button>` with `nativeButton`).
+- **Keyboard interactions**: <kbd>Space</kbd> and <kbd>Enter</kbd> both toggle the switch when it's focused.
+- **ARIA attributes**: `aria-checked` reflects the on/off state; `<Switch.Thumb>` is purely presentational.
+- **Labeling**: see [Labeling a switch](#labeling-a-switch) above—the accessible name comes from an enclosing `<label>`, a sibling `<label htmlFor>` paired with `nativeButton`, or `Field.Label`.
+
+This pattern follows the [ARIA APG Switch pattern](https://www.w3.org/WAI/ARIA/apg/patterns/switch/).
+
 ## API reference
 
 import { TypesSwitch } from './types';

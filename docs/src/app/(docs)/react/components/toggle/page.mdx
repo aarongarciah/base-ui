@@ -20,6 +20,15 @@ import { Toggle } from '@base-ui/react/toggle';
 <Toggle />;
 ```
 
+## Accessibility
+
+- **Role**: `<Toggle>` renders a native `<button>`, with no additional role.
+- **Keyboard interactions**: <kbd>Enter</kbd> and <kbd>Space</kbd> both toggle the pressed state, matching native button activation. Inside a [Toggle Group](/react/components/toggle-group#accessibility) or [Toolbar](/react/components/toolbar#accessibility), the surrounding composite's roving tabindex applies instead of standalone tab focus.
+- **ARIA attributes**: `aria-pressed` reflects the pressed state.
+- **Labeling**: the button's text content provides its accessible name; icon-only toggles need `aria-label`.
+
+This pattern follows the [ARIA APG Button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/button/)'s pressed-state guidance for toggle buttons.
+
 ## API reference
 
 import { TypesToggle } from './types';

@@ -271,6 +271,18 @@ import { DemoToastVaryingHeights } from './demos/varying-heights';
 
 <DemoToastVaryingHeights />
 
+## Accessibility
+
+- **Role**: `<Toast.Viewport>` renders `role="region"` with a default `aria-label="Notifications"` (overridable) and `aria-live="polite"`; `<Toast.Root>` renders `role="dialog"` at default priority, or `role="alertdialog"` at `priority: 'high'`.
+- **Announcements**: see the note above on how default and high priority toasts are announced differently.
+- **Keyboard interactions**:
+  - <kbd>F6</kbd> — jumps focus into the toast viewport landmark, pausing auto-dismiss timers while
+    it's focused.
+  - <kbd>Tab</kbd> / <kbd>Shift+Tab</kbd> — after <kbd>F6</kbd>, move between toasts; tabbing out of
+    the viewport restores focus to where it was before and resumes timers.
+  - <kbd>Escape</kbd> — closes the focused toast.
+- **Swipe-to-dismiss is a supplementary gesture**: it has no keyboard equivalent, so always render `<Toast.Close>` with an `aria-label` as a reachable alternative.
+
 ## API reference
 
 import { TypesToast, TypesToastAdditional } from './types';
@@ -364,8 +376,8 @@ function App() {
 }
 ```
 
-For high priority toasts, the `title` and `description` strings are what are used to announce the toast to screen readers.
-Screen readers do not announce any extra content rendered inside `<Toast.Root>`, including the `<Toast.Title>` or `<Toast.Description>` components, unless they intentionally navigate to the toast viewport.
+Default priority toasts are announced through the viewport's `aria-live="polite"` region as their content mounts, so rendered `<Toast.Title>` and `<Toast.Description>` content is what gets read.
+High priority toasts (`priority: 'high'`) are announced differently: the `title` and `description` strings passed to `add()` are read through a separate, more assertive announcement, independent of what's rendered inside `<Toast.Root>`. In both cases, a screen reader user can also intentionally navigate into the toast viewport—see the <kbd>F6</kbd> shortcut above—to read the full rendered content directly.
 
 ### `update` method
 

@@ -139,6 +139,13 @@ import { DemoCheckboxGroupNested } from './demos/nested';
 
 <DemoCheckboxGroupNested />
 
+## Accessibility
+
+- **Role**: `<CheckboxGroup>` renders `role="group"`.
+- **Keyboard interactions**: checkboxes in the group aren't a composite widget—each one keeps its own place in the tab order, and <kbd>Space</kbd> toggles whichever checkbox is focused. See [Checkbox's keyboard interactions](/react/components/checkbox#accessibility) for individual checkbox behavior.
+- **ARIA attributes**: a [parent checkbox](#parent-checkbox) gets `aria-checked="mixed"` when some, but not all, of its children are checked, and `aria-controls` referencing the child checkboxes it controls.
+- **Labeling**: the group needs its own accessible name—see [Labeling a checkbox group](#labeling-a-checkbox-group) above—in addition to each individual checkbox's own label.
+
 ## API reference
 
 import { TypesCheckboxGroup } from './types';
