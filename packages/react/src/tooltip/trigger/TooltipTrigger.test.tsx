@@ -117,4 +117,56 @@ describe('<Tooltip.Trigger />', () => {
       });
     },
   );
+
+  describe('accessible description', () => {
+    it('is described by the popup while open', async () => {
+      await render(
+        <Tooltip.Root open>
+          <Tooltip.Trigger data-testid="trigger">Trigger</Tooltip.Trigger>
+          <Tooltip.Portal>
+            <Tooltip.Positioner>
+              <Tooltip.Popup>Content</Tooltip.Popup>
+            </Tooltip.Positioner>
+          </Tooltip.Portal>
+        </Tooltip.Root>,
+      );
+
+      const trigger = screen.getByTestId('trigger');
+      const popup = screen.getByRole('tooltip');
+
+      expect(popup.id).not.toBe('');
+      expect(trigger).toHaveAttribute('aria-describedby', popup.id);
+    });
+
+    it('respects a custom popup id', async () => {
+      await render(
+        <Tooltip.Root open>
+          <Tooltip.Trigger data-testid="trigger">Trigger</Tooltip.Trigger>
+          <Tooltip.Portal>
+            <Tooltip.Positioner>
+              <Tooltip.Popup id="custom-tooltip">Content</Tooltip.Popup>
+            </Tooltip.Positioner>
+          </Tooltip.Portal>
+        </Tooltip.Root>,
+      );
+
+      expect(screen.getByRole('tooltip')).toHaveAttribute('id', 'custom-tooltip');
+      expect(screen.getByTestId('trigger')).toHaveAttribute('aria-describedby', 'custom-tooltip');
+    });
+
+    it('is not described by the popup while closed', async () => {
+      await render(
+        <Tooltip.Root>
+          <Tooltip.Trigger data-testid="trigger">Trigger</Tooltip.Trigger>
+          <Tooltip.Portal>
+            <Tooltip.Positioner>
+              <Tooltip.Popup>Content</Tooltip.Popup>
+            </Tooltip.Positioner>
+          </Tooltip.Portal>
+        </Tooltip.Root>,
+      );
+
+      expect(screen.getByTestId('trigger')).not.toHaveAttribute('aria-describedby');
+    });
+  });
 });

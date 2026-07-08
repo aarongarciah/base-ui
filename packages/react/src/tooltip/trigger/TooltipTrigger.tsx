@@ -104,6 +104,7 @@ export const TooltipTrigger = fastComponentRef(function TooltipTrigger(
   const thisTriggerId = useBaseUiId(idProp);
   const isTriggerActive = store.useState('isTriggerActive', thisTriggerId);
   const isOpenedByThisTrigger = store.useState('isOpenedByTrigger', thisTriggerId);
+  const popupId = store.useState('triggerPopupId', thisTriggerId);
   const floatingRootContext = store.useState('floatingRootContext');
 
   const triggerElementRef = React.useRef<Element | null>(null);
@@ -300,6 +301,7 @@ export const TooltipTrigger = fastComponentRef(function TooltipTrigger(
           }
         },
         id: thisTriggerId,
+        'aria-describedby': popupId,
         [TooltipTriggerDataAttributes.triggerDisabled]: disabled ? '' : undefined,
         [TOOLTIP_TRIGGER_IDENTIFIER]: disabled ? undefined : '',
       } as React.HTMLAttributes<Element>,

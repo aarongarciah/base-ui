@@ -14,8 +14,8 @@ import { DemoTooltipHero } from './demos/hero';
 
 ## Usage guidelines
 
-- **Prefer using tooltips as visual labels only**: Tooltips should act as supplementary visual labels for sighted mouse and keyboard users. Tooltips alone are not accessible to touch or screen reader users. See [Alternatives to tooltips](#alternatives-to-tooltips) for more details.
-- **Provide an accessible name for the trigger**: Tooltips are visual-only elements and are not a replacement for labeling the trigger. The tooltip's trigger must have an `aria-label` attribute that closely matches the tooltip's content to ensure consistency for screen reader users.
+- **Prefer using tooltips as supplementary labels only**: Tooltips should act as supplementary labels for sighted mouse and keyboard users. They are not reliably accessible to everyone else: they never open on touch devices, and screen reader users only have the tooltip content announced when the trigger receives keyboard focus. See [Alternatives to tooltips](#alternatives-to-tooltips) for more details.
+- **Provide an accessible name for the trigger**: A tooltip is not a replacement for labeling the trigger, which must always have an accessible name of its own—use `aria-label` for icon-only triggers. While the tooltip is open, the trigger is described by the tooltip content via `aria-describedby`, announced after the trigger's name on keyboard focus. If the tooltip text is identical to the name, browsers suppress the duplicate description; if it adds detail beyond the name, that detail is announced as the description.
 
 ## Anatomy
 

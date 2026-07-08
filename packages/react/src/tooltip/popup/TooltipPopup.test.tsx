@@ -32,4 +32,18 @@ describe('<Tooltip.Popup />', () => {
 
     expect(screen.getByText('Content')).not.toBe(null);
   });
+
+  it('has the tooltip role', async () => {
+    await render(
+      <Tooltip.Root open>
+        <Tooltip.Portal>
+          <Tooltip.Positioner>
+            <Tooltip.Popup>Content</Tooltip.Popup>
+          </Tooltip.Positioner>
+        </Tooltip.Portal>
+      </Tooltip.Root>,
+    );
+
+    expect(screen.getByRole('tooltip')).toHaveTextContent('Content');
+  });
 });
