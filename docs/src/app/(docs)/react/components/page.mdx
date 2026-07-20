@@ -44,13 +44,13 @@
 
 ## Accordion
 
-A set of collapsible panels with headings.
+A set of collapsible panels built on native disclosure elements.
 
 <details>
 
 <summary>Outline</summary>
 
-- Keywords: React Accordion, Accordion Component, Collapsible Content, Expandable Panel, Accessible Accordion, Multi-Panel UI, Disclosure Widget, FAQ Component, Headless React Components, Base UI
+- Keywords: React Accordion, Accordion Component, Collapsible Content, Expandable Panel, Accessible Accordion, Multi-Panel UI, Disclosure Widget, FAQ Component, Headless React Components, Base UI
 - Sections:
   - Anatomy
   - Examples
@@ -59,27 +59,22 @@ A set of collapsible panels with headings.
   - API reference
     - Root
     - Item
-    - Header
     - Trigger
     - Panel
 - Exports:
   - Accordion - Root
-    - Props: className, defaultValue, disabled, hiddenUntilFound, keepMounted, loopFocus, multiple, onValueChange, orientation, render, style, value
-    - Data Attributes: data-disabled, data-orientation
+    - Props: className, defaultValue, disabled, multiple, onValueChange, render, style, value
+    - Data Attributes: data-disabled
   - Accordion - Trigger
-    - Props: className, nativeButton, render, style
+    - Props: className, render, style
     - Data Attributes: data-disabled, data-panel-open
   - Accordion - Item
     - Props: className, disabled, onOpenChange, render, style, value
     - Data Attributes: data-disabled, data-index, data-open
-  - Accordion - Header
+  - Accordion - Panel
     - Props: className, render, style
     - Data Attributes: data-disabled, data-index, data-open
-  - Accordion - Panel
-    - Props: className, hiddenUntilFound, keepMounted, render, style
-    - Data Attributes: data-disabled, data-ending-style, data-index, data-open, data-orientation, data-starting-style
-    - CSS Variables: --accordion-panel-height, --accordion-panel-width
-- Types: Accordion.Header.Props, Accordion.Header.State, Accordion.Item.ChangeEventDetails, Accordion.Item.ChangeEventReason, Accordion.Item.Props, Accordion.Item.State, Accordion.Panel.Props, Accordion.Panel.State, Accordion.Root.ChangeEventDetails, Accordion.Root.ChangeEventReason, Accordion.Root.Props, Accordion.Root.State, Accordion.Root.Value, Accordion.Trigger.Props, Accordion.Trigger.State
+- Types: Accordion.Item.ChangeEventDetails, Accordion.Item.ChangeEventReason, Accordion.Item.Props, Accordion.Item.State, Accordion.Panel.Props, Accordion.Panel.State, Accordion.Root.ChangeEventDetails, Accordion.Root.ChangeEventReason, Accordion.Root.Props, Accordion.Root.State, Accordion.Root.Value, Accordion.Trigger.Props, Accordion.Trigger.State
 
 </details>
 

@@ -33,7 +33,12 @@ const NO_RESTRICTED_IMPORTS_PATHS_TOP_LEVEL_PACKAGES = [
 ];
 
 export default defineConfig(
-  globalIgnores(['./examples', './playground/vite-app/dist']),
+  globalIgnores([
+    './examples',
+    './playground/vite-app/dist',
+    // Verbatim third-party spec copies vendored as agent skill references; not our prose to lint.
+    '**/.claude/skills/**/references/**',
+  ]),
   createBaseConfig({
     baseDirectory: dirname,
     markdown: true,

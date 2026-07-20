@@ -224,8 +224,9 @@ export default function Homepage() {
             className="AccordionWebsiteRoot"
             itemScope
             itemType="https://schema.org/FAQPage"
-            // Setting `keepMounted` so that the content of all panels is available in the DOM for search engines. This is especially important for the homepage, which contains important SEO content.
-            keepMounted
+            // Each item renders a native `<details>`, so every panel's content stays in the DOM
+            // while closed. This keeps the FAQ answers available to search engines, which is
+            // especially important for the homepage's SEO content.
           >
             <Accordion.Item
               className="AccordionWebsiteItem"
@@ -233,13 +234,11 @@ export default function Homepage() {
               itemProp="mainEntity"
               itemType="https://schema.org/Question"
             >
-              <Accordion.Header className="AccordionWebsiteHeader">
-                <Accordion.Trigger className="AccordionWebsiteTrigger Text sz-2" itemProp="name">
-                  What is Base UI?
-                  <PlusIcon className="AccordionWebsiteIcon AccordionWebsiteIconPlus" />
-                  <MinusIcon className="AccordionWebsiteIcon AccordionWebsiteIconMinus" />
-                </Accordion.Trigger>
-              </Accordion.Header>
+              <Accordion.Trigger className="AccordionWebsiteTrigger Text sz-2" itemProp="name">
+                What is Base UI?
+                <PlusIcon className="AccordionWebsiteIcon AccordionWebsiteIconPlus" />
+                <MinusIcon className="AccordionWebsiteIcon AccordionWebsiteIconMinus" />
+              </Accordion.Trigger>
               <Accordion.Panel
                 className="AccordionWebsitePanel"
                 itemScope
@@ -259,13 +258,11 @@ export default function Homepage() {
               itemProp="mainEntity"
               itemType="https://schema.org/Question"
             >
-              <Accordion.Header className="AccordionWebsiteHeader">
-                <Accordion.Trigger className="AccordionWebsiteTrigger Text sz-2" itemProp="name">
-                  Does Base UI work with any styling library?
-                  <PlusIcon className="AccordionWebsiteIcon AccordionWebsiteIconPlus" />
-                  <MinusIcon className="AccordionWebsiteIcon AccordionWebsiteIconMinus" />
-                </Accordion.Trigger>
-              </Accordion.Header>
+              <Accordion.Trigger className="AccordionWebsiteTrigger Text sz-2" itemProp="name">
+                Does Base UI work with any styling library?
+                <PlusIcon className="AccordionWebsiteIcon AccordionWebsiteIconPlus" />
+                <MinusIcon className="AccordionWebsiteIcon AccordionWebsiteIconMinus" />
+              </Accordion.Trigger>
               <Accordion.Panel
                 className="AccordionWebsitePanel"
                 itemScope
@@ -286,13 +283,11 @@ export default function Homepage() {
               itemProp="mainEntity"
               itemType="https://schema.org/Question"
             >
-              <Accordion.Header className="AccordionWebsiteHeader">
-                <Accordion.Trigger className="AccordionWebsiteTrigger Text sz-2" itemProp="name">
-                  Which accessibility standards does Base UI follow?
-                  <PlusIcon className="AccordionWebsiteIcon AccordionWebsiteIconPlus" />
-                  <MinusIcon className="AccordionWebsiteIcon AccordionWebsiteIconMinus" />
-                </Accordion.Trigger>
-              </Accordion.Header>
+              <Accordion.Trigger className="AccordionWebsiteTrigger Text sz-2" itemProp="name">
+                Which accessibility standards does Base UI follow?
+                <PlusIcon className="AccordionWebsiteIcon AccordionWebsiteIconPlus" />
+                <MinusIcon className="AccordionWebsiteIcon AccordionWebsiteIconMinus" />
+              </Accordion.Trigger>
               <Accordion.Panel
                 className="AccordionWebsitePanel"
                 itemScope
@@ -321,13 +316,11 @@ export default function Homepage() {
               itemProp="mainEntity"
               itemType="https://schema.org/Question"
             >
-              <Accordion.Header className="AccordionWebsiteHeader">
-                <Accordion.Trigger className="AccordionWebsiteTrigger Text sz-2" itemProp="name">
-                  How does Base UI differ from Radix UI?
-                  <PlusIcon className="AccordionWebsiteIcon AccordionWebsiteIconPlus" />
-                  <MinusIcon className="AccordionWebsiteIcon AccordionWebsiteIconMinus" />
-                </Accordion.Trigger>
-              </Accordion.Header>
+              <Accordion.Trigger className="AccordionWebsiteTrigger Text sz-2" itemProp="name">
+                How does Base UI differ from Radix UI?
+                <PlusIcon className="AccordionWebsiteIcon AccordionWebsiteIconPlus" />
+                <MinusIcon className="AccordionWebsiteIcon AccordionWebsiteIconMinus" />
+              </Accordion.Trigger>
               <Accordion.Panel
                 className="AccordionWebsitePanel"
                 itemScope
@@ -357,13 +350,11 @@ export default function Homepage() {
               itemProp="mainEntity"
               itemType="https://schema.org/Question"
             >
-              <Accordion.Header className="AccordionWebsiteHeader">
-                <Accordion.Trigger className="AccordionWebsiteTrigger Text sz-2" itemProp="name">
-                  Can I use Base UI without React?
-                  <PlusIcon className="AccordionWebsiteIcon AccordionWebsiteIconPlus" />
-                  <MinusIcon className="AccordionWebsiteIcon AccordionWebsiteIconMinus" />
-                </Accordion.Trigger>
-              </Accordion.Header>
+              <Accordion.Trigger className="AccordionWebsiteTrigger Text sz-2" itemProp="name">
+                Can I use Base UI without React?
+                <PlusIcon className="AccordionWebsiteIcon AccordionWebsiteIconPlus" />
+                <MinusIcon className="AccordionWebsiteIcon AccordionWebsiteIconMinus" />
+              </Accordion.Trigger>
               <Accordion.Panel
                 className="AccordionWebsitePanel"
                 itemScope
@@ -383,13 +374,11 @@ export default function Homepage() {
               itemProp="mainEntity"
               itemType="https://schema.org/Question"
             >
-              <Accordion.Header className="AccordionWebsiteHeader">
-                <Accordion.Trigger className="AccordionWebsiteTrigger Text sz-2" itemProp="name">
-                  Is Base UI free for commercial use?
-                  <PlusIcon className="AccordionWebsiteIcon AccordionWebsiteIconPlus" />
-                  <MinusIcon className="AccordionWebsiteIcon AccordionWebsiteIconMinus" />
-                </Accordion.Trigger>
-              </Accordion.Header>
+              <Accordion.Trigger className="AccordionWebsiteTrigger Text sz-2" itemProp="name">
+                Is Base UI free for commercial use?
+                <PlusIcon className="AccordionWebsiteIcon AccordionWebsiteIconPlus" />
+                <MinusIcon className="AccordionWebsiteIcon AccordionWebsiteIconMinus" />
+              </Accordion.Trigger>
               <Accordion.Panel
                 className="AccordionWebsitePanel"
                 itemScope
@@ -409,13 +398,11 @@ export default function Homepage() {
               itemProp="mainEntity"
               itemType="https://schema.org/Question"
             >
-              <Accordion.Header className="AccordionWebsiteHeader">
-                <Accordion.Trigger className="AccordionWebsiteTrigger Text sz-2" itemProp="name">
-                  Do you offer enterprise SLAs?
-                  <PlusIcon className="AccordionWebsiteIcon AccordionWebsiteIconPlus" />
-                  <MinusIcon className="AccordionWebsiteIcon AccordionWebsiteIconMinus" />
-                </Accordion.Trigger>
-              </Accordion.Header>
+              <Accordion.Trigger className="AccordionWebsiteTrigger Text sz-2" itemProp="name">
+                Do you offer enterprise SLAs?
+                <PlusIcon className="AccordionWebsiteIcon AccordionWebsiteIconPlus" />
+                <MinusIcon className="AccordionWebsiteIcon AccordionWebsiteIconMinus" />
+              </Accordion.Trigger>
               <Accordion.Panel
                 className="AccordionWebsitePanel"
                 itemScope

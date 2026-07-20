@@ -9,8 +9,15 @@ export interface AccordionRootContext<Value = any> {
     nextOpen: boolean,
     eventDetails: AccordionRoot.ChangeEventDetails,
   ) => void;
-  hiddenUntilFound: boolean;
-  keepMounted: boolean;
+  /**
+   * Whether multiple items can be open at the same time.
+   */
+  multiple: boolean;
+  /**
+   * A shared `name` applied to each item's `<details>` element so the browser
+   * enforces a single open item natively. `undefined` when `multiple` is `true`.
+   */
+  name: string | undefined;
   state: AccordionRoot.State<Value>;
   value: AccordionRoot.Value<Value>;
 }

@@ -6,12 +6,10 @@ export default function ExampleAccordion() {
   return (
     <Accordion.Root className={styles.Accordion} multiple>
       <Accordion.Item className={styles.Item}>
-        <Accordion.Header className={styles.Header}>
-          <Accordion.Trigger className={styles.Trigger}>
-            What is Base UI?
-            <PlusIcon className={styles.Icon} />
-          </Accordion.Trigger>
-        </Accordion.Header>
+        <Accordion.Trigger className={styles.Trigger}>
+          What is Base UI?
+          <PlusIcon className={styles.Icon} />
+        </Accordion.Trigger>
         <Accordion.Panel className={styles.Panel}>
           <div className={styles.Content}>
             Base UI is a library of high-quality unstyled React components for design systems and
@@ -21,12 +19,10 @@ export default function ExampleAccordion() {
       </Accordion.Item>
 
       <Accordion.Item className={styles.Item}>
-        <Accordion.Header className={styles.Header}>
-          <Accordion.Trigger className={styles.Trigger}>
-            How do I get started?
-            <PlusIcon className={styles.Icon} />
-          </Accordion.Trigger>
-        </Accordion.Header>
+        <Accordion.Trigger className={styles.Trigger}>
+          How do I get started?
+          <PlusIcon className={styles.Icon} />
+        </Accordion.Trigger>
         <Accordion.Panel className={styles.Panel}>
           <div className={styles.Content}>
             Head to the “Quick start” guide in the docs. If you’ve used unstyled libraries before,
@@ -36,12 +32,10 @@ export default function ExampleAccordion() {
       </Accordion.Item>
 
       <Accordion.Item className={styles.Item}>
-        <Accordion.Header className={styles.Header}>
-          <Accordion.Trigger className={styles.Trigger}>
-            Can I use it for my project?
-            <PlusIcon className={styles.Icon} />
-          </Accordion.Trigger>
-        </Accordion.Header>
+        <Accordion.Trigger className={styles.Trigger}>
+          Can I use it for my project?
+          <PlusIcon className={styles.Icon} />
+        </Accordion.Trigger>
         <Accordion.Panel className={styles.Panel}>
           <div className={styles.Content}>Of course! Base UI is free and open source.</div>
         </Accordion.Panel>

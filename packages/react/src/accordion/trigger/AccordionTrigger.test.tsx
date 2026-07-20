@@ -7,9 +7,7 @@ describe('<Accordion.Trigger />', () => {
   const { render } = createRenderer();
 
   describeConformance(<Accordion.Trigger />, () => ({
-    refInstanceof: window.HTMLButtonElement,
-    testComponentPropWith: 'button',
-    button: true,
+    refInstanceof: window.HTMLElement,
     render: (node) =>
       render(
         <Accordion.Root>
@@ -18,21 +16,35 @@ describe('<Accordion.Trigger />', () => {
       ),
   }));
 
-  it('keeps a non-native trigger tabbable', async () => {
+  it('renders a native <summary> element', async () => {
     await render(
       <Accordion.Root>
         <Accordion.Item>
-          <Accordion.Header>
-            <Accordion.Trigger nativeButton={false} render={<span />}>
-              Trigger
-            </Accordion.Trigger>
-          </Accordion.Header>
+          <Accordion.Trigger>Trigger</Accordion.Trigger>
           <Accordion.Panel>Panel</Accordion.Panel>
         </Accordion.Item>
       </Accordion.Root>,
     );
 
-    const trigger = screen.getByRole('button', { name: 'Trigger' });
-    expect(trigger).toHaveAttribute('tabindex', '0');
+    expect(screen.getByText('Trigger').tagName).toBe('SUMMARY');
+  });
+
+  it('exposes aria-disabled and stays focusable when disabled', async () => {
+    await render(
+      <Accordion.Root disabled>
+        <Accordion.Item>
+          <Accordion.Trigger>Trigger</Accordion.Trigger>
+          <Accordion.Panel>Panel</Accordion.Panel>
+        </Accordion.Item>
+      </Accordion.Root>,
+    );
+
+    const trigger = screen.getByText('Trigger');
+
+    expect(trigger).toHaveAttribute('aria-disabled', 'true');
+    expect(trigger).not.toHaveAttribute('disabled');
+
+    trigger.focus();
+    expect(trigger).toHaveFocus();
   });
 });

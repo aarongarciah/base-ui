@@ -1,9 +1,9 @@
 # Accordion
 
-<Subtitle>A set of collapsible panels with headings.</Subtitle>
+<Subtitle>A set of collapsible panels built on native disclosure elements.</Subtitle>
 <Meta
   name="description"
-  content="A high-quality, unstyled React accordion component that displays a set of collapsible panels with headings."
+  content="A high-quality, unstyled React accordion component built on the native details and summary elements."
 />
 
 import { DemoAccordionHero } from './demos/hero';
@@ -19,19 +19,21 @@ import { Accordion } from '@base-ui/react/accordion';
 
 <Accordion.Root>
   <Accordion.Item>
-    <Accordion.Header>
-      <Accordion.Trigger />
-    </Accordion.Header>
+    <Accordion.Trigger />
     <Accordion.Panel />
   </Accordion.Item>
 </Accordion.Root>;
 ```
 
+- `Accordion.Item` renders a native `<details>` element.
+- `Accordion.Trigger` renders its `<summary>` — the control that labels and toggles the panel.
+- `Accordion.Panel` renders the `<details>` content, so it stays in the DOM while closed and can be animated with the `::details-content` pseudo-element.
+
 ## Examples
 
 ### Open multiple panels
 
-You can set up the accordion to allow multiple panels to be open at the same time using the `multiple` prop.
+By default only one panel stays open at a time: each item's `<details>` shares a `name`, so the browser closes the others natively. Set the `multiple` prop to let several panels stay open at once (the shared `name` is dropped).
 
 import { DemoAccordionMultiple } from './demos/multiple';
 
@@ -39,17 +41,13 @@ import { DemoAccordionMultiple } from './demos/multiple';
 
 ## Accessibility
 
-- **Roles**: `<Accordion.Header>` renders an `<h3>` so panels sit in the page's heading structure, and `<Accordion.Panel>` renders `role="region"`, named by its trigger through `aria-labelledby`.
-- **Keyboard interactions**:
+- **Native semantics**: each `Accordion.Item` is a `<details>` and each `Accordion.Trigger` is its `<summary>`, so the browser provides the disclosure role and announces the expanded/collapsed state — no `aria-expanded`, `aria-controls`, or `role` attributes are added.
+- **Keyboard interactions** (all built in):
   - <kbd>Enter</kbd> / <kbd>Space</kbd> — toggles the focused trigger's panel open or closed.
-  - <kbd>Tab</kbd> / <kbd>Shift+Tab</kbd> — moves between triggers in the normal tab order. There's
-    no arrow-key navigation or roving tabindex between headers, following the [current APG
-    guidance](https://github.com/w3c/aria-practices/pull/3434) that accordions don't need composite
-    keyboard behavior.
-- **ARIA attributes**: each trigger carries `aria-expanded` reflecting its panel's open state, and `aria-controls` pointing at the panel's `id` while it's open.
-- **Labeling**: the trigger's text (or `aria-label`) becomes the panel's accessible name through `aria-labelledby`—no extra labeling is needed on the panel itself.
-
-This pattern follows the [ARIA APG Accordion pattern](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/).
+  - <kbd>Tab</kbd> / <kbd>Shift+Tab</kbd> — moves between triggers in the normal tab order.
+- **Exclusive open state**: single-open behavior comes from the shared `name` on each `<details>`, so it keeps working even before JavaScript loads.
+- **Find in page**: because closed panels stay in the DOM, the browser's find-in-page can match hidden text and open the corresponding item automatically.
+- **Disabled items**: a disabled trigger keeps `aria-disabled` (staying focusable and discoverable) instead of being removed from the tab order, and its toggle is suppressed.
 
 ## API reference
 
@@ -62,10 +60,6 @@ import { TypesAccordion } from './types';
 ### Item
 
 <TypesAccordion.Item />
-
-### Header
-
-<TypesAccordion.Header />
 
 ### Trigger
 
@@ -86,6 +80,6 @@ export const metadata = {
     'Disclosure Widget',
     'FAQ Component',
     'Headless React Components',
-    'Base UI',
+    'Base UI',
   ],
 };

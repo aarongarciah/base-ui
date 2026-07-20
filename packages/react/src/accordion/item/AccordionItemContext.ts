@@ -4,9 +4,9 @@ import type { AccordionItemState } from './AccordionItem';
 
 export interface AccordionItemContext {
   open: boolean;
+  disabled: boolean;
+  handleTrigger: (event: React.MouseEvent) => void;
   state: AccordionItemState;
-  setTriggerId: (id: string | undefined) => void;
-  triggerId?: string | undefined;
 }
 
 export const AccordionItemContext = React.createContext<AccordionItemContext | undefined>(
