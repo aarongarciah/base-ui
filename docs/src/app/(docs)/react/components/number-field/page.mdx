@@ -34,6 +34,17 @@ import { NumberField } from '@base-ui/react/number-field';
 </NumberField.Root>;
 ```
 
+## Accessibility
+
+- **`<NumberField.Input>` is a textbox, not a spinbutton**: it renders `type="text"` rather than `role="spinbutton"`, so it doesn't expose `aria-valuenow`/`min`/`max`. The visible value is announced as ordinary text; `aria-roledescription="Number field"` hints at its purpose without replacing its accessible name.
+- **Keyboard interactions** (input focused):
+  - <kbd>ArrowUp</kbd> / <kbd>ArrowDown</kbd> — increment/decrement by `step` (or `smallStep` with
+    <kbd>Alt</kbd>, `largeStep` with <kbd>Shift</kbd>).
+  - <kbd>Home</kbd> / <kbd>End</kbd> — jump to `min` / `max`, when defined.
+- **The increment and decrement buttons are removed from the tab order** (`tabIndex={-1}`)—keyboard users step the value with the arrow keys above instead. The buttons keep a built-in `aria-label` ("Increase"/"Decrease") so they're still available to touch screen reader users.
+- **The scrub area is pointer-only**: dragging it changes the value with no keyboard equivalent, so it must always be a supplement to the input, never the only way to change the value.
+- **Labeling**: see [Usage guidelines](#usage-guidelines) above—label `<NumberField.Input>` via `<label>` or `Field`.
+
 ## API reference
 
 import { TypesNumberField } from './types';

@@ -69,6 +69,12 @@ import { DemoFormZod } from './demos/zod';
 
 <DemoFormZod />
 
+## Accessibility
+
+- **Focus moves to the first invalid field on a failed submit**, and to the first field marked invalid by an updated `errors` prop—so screen reader and keyboard users land directly on the problem instead of having to search the form. `<input>` fields also have their value selected for quick correction.
+- **Native browser validation UI is disabled** (`noValidate`) in favor of Base UI's own validation, which surfaces errors through each field's `aria-invalid` and `<Field.Error>`—see [Field's accessibility notes](/react/components/field#accessibility) for how that wiring works.
+- Errors passed through the `errors` prop are matched to fields by their `name`, so every field that can report a server-side error needs a `name` that matches its key in `errors`.
+
 ## API reference
 
 import { TypesForm } from './types';

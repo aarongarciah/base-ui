@@ -25,16 +25,16 @@ import { Dialog } from '@base-ui/react/dialog';
   <Dialog.Trigger />
   <Dialog.Portal>
     <Dialog.Backdrop />
-    <Dialog.Viewport>
-      <Dialog.Popup>
-        <Dialog.Title />
-        <Dialog.Description />
-        <Dialog.Close />
-      </Dialog.Popup>
-    </Dialog.Viewport>
+    <Dialog.Popup>
+      <Dialog.Title />
+      <Dialog.Description />
+      <Dialog.Close />
+    </Dialog.Popup>
   </Dialog.Portal>
 </Dialog.Root>;
 ```
+
+`<Dialog.Popup>` renders a native [`<dialog>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) element. When modal, it is opened with [`showModal()`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/showModal) and promoted to the browser's [top layer](https://developer.mozilla.org/en-US/docs/Glossary/Top_layer), so it anchors to the viewport and traps focus natively—there's no need to wrap it in a positioning container. `<Dialog.Viewport>` remains available as an optional positioning container for non-modal dialogs.
 
 ## Examples
 
@@ -162,7 +162,7 @@ import { DemoDialogCloseConfirmation } from './demos/close-confirmation';
 
 ### Outside scroll dialog
 
-The dialog can be made scrollable by using `<Dialog.Viewport>` as an outer scrollable container for `<Dialog.Popup>` while the popup can extend past the bottom edge. The scrollable area uses the [Scroll Area component](/react/components/scroll-area) to provide custom scrollbars.
+The dialog can be made scrollable by placing a scroll container inside `<Dialog.Popup>` so the card can extend past the bottom edge. Because the modal popup fills the top layer, the scrollable area lives inside it and uses the [Scroll Area component](/react/components/scroll-area) to provide custom scrollbars.
 
 import { DemoDialogOutsideScroll } from './demos/outside-scroll';
 
@@ -170,7 +170,7 @@ import { DemoDialogOutsideScroll } from './demos/outside-scroll';
 
 ### Inside scroll dialog
 
-The dialog can be made scrollable by making an inner container scrollable while the popup stays fully on screen. `<Dialog.Viewport>` is used as a positioning container for `<Dialog.Popup>`, while an inner scrollable area is created using the [Scroll Area component](/react/components/scroll-area).
+The dialog can be made scrollable by making an inner container scrollable while the popup stays fully on screen. `<Dialog.Popup>` centers a card and constrains its height, while an inner scrollable area is created using the [Scroll Area component](/react/components/scroll-area).
 
 import { DemoDialogInsideScroll } from './demos/inside-scroll';
 
@@ -180,7 +180,7 @@ import { DemoDialogInsideScroll } from './demos/inside-scroll';
 
 When adding elements that should appear "outside" the colored popup area, continue to place them inside `<Dialog.Popup>`, but create a child element that has the popup styles. This ensures they are kept in the tab order and announced correctly by screen readers.
 
-`<Dialog.Popup>` has `pointer-events: none`, while inner content (the colored popup and close button) has `pointer-events: auto` so clicks on the backdrop continue to be registered.
+The positioning wrapper inside `<Dialog.Popup>` has `pointer-events: none`, while inner content (the colored popup and close button) has `pointer-events: auto`. Clicks in the empty area fall through to the `<dialog>` element itself, so its backdrop dismissal continues to be registered.
 
 import { DemoDialogUncontained } from './demos/uncontained';
 
@@ -287,6 +287,22 @@ Instead, the `onOpenChange` callback receives an additional argument, `eventDeta
 import { DemoDialogDetachedTriggersControlled } from './demos/detached-triggers-controlled';
 
 <DemoDialogDetachedTriggersControlled />
+
+## Accessibility
+
+- **Role**: `<Dialog.Popup>` renders `role="dialog"`.
+- **Labeling**: `<Dialog.Title>` provides the popup's accessible name through `aria-labelledby`, and `<Dialog.Description>` provides its accessible description through `aria-describedby`. Always render a title, even if it's visually hidden.
+- **Keyboard interactions**:
+  - <kbd>Tab</kbd> / <kbd>Shift+Tab</kbd> — when `modal` is `true` (the default) or `'trap-focus'`,
+    cycles focus between the popup's focusable elements without leaving it.
+  - <kbd>Escape</kbd> — requests to close the dialog. This can be canceled in `onOpenChange`, for
+    example to show a confirmation dialog instead—see [Close confirmation](#close-confirmation)
+    below.
+  - <kbd>Enter</kbd> / <kbd>Space</kbd> — activates the focused trigger or button.
+- **Focus management**: opening the dialog moves focus to its first focusable element (or to the popup itself on touch, to avoid triggering the virtual keyboard). Closing it returns focus to the trigger that opened it. Render `<Dialog.Close>` inside the popup so touch screen reader users always have a way to dismiss it when `modal` traps focus.
+- **Non-modal dialogs**: setting `modal={false}` removes the focus trap and lets the rest of the page stay interactive—use this only when the dialog's content doesn't require the user's full attention.
+
+This pattern follows the [ARIA APG Dialog (Modal) pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/).
 
 ## API reference
 

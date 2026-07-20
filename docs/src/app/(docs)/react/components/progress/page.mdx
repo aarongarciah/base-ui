@@ -26,6 +26,15 @@ import { Progress } from '@base-ui/react/progress';
 </Progress.Root>;
 ```
 
+## Accessibility
+
+- **Role**: `<Progress.Root>` renders `role="progressbar"`.
+- **ARIA attributes**: `aria-valuemin`, `aria-valuemax`, and `aria-valuenow` are set from `min`, `max`, and `value`; `aria-valuenow` is omitted for indeterminate progress (`value={null}`). `aria-valuetext` announces a human-readable value—a formatted percentage by default, or a custom string via `getAriaValueText`.
+- **Not interactive**: progress is read-only and never receives focus.
+- **Labeling**: render `<Progress.Label>` so `aria-labelledby` gives the progress bar an accessible name—without it, the progress bar has none.
+
+This pattern follows the [ARIA APG Progress Bar pattern](https://www.w3.org/WAI/ARIA/apg/patterns/progressbar/).
+
 ## API reference
 
 import { TypesProgress } from './types';

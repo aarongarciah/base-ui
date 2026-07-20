@@ -5,17 +5,17 @@ import { ScrollArea } from '@base-ui/react/scroll-area';
 import styles from './index.module.css';
 
 export default function OutsideScrollDialog() {
-  const popupRef = React.useRef<HTMLDivElement>(null);
+  const popupRef = React.useRef<HTMLDialogElement>(null);
   return (
     <Dialog.Root>
       <Dialog.Trigger className={styles.Button}>Open dialog</Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Backdrop className={styles.Backdrop} />
-        <Dialog.Viewport className={styles.Viewport}>
+        <Dialog.Popup ref={popupRef} className={styles.Popup} initialFocus={popupRef}>
           <ScrollArea.Root style={{ position: undefined }} className={styles.ScrollViewport}>
             <ScrollArea.Viewport className={styles.ScrollViewport}>
               <ScrollArea.Content className={styles.ScrollContent}>
-                <Dialog.Popup ref={popupRef} className={styles.Popup} initialFocus={popupRef}>
+                <div className={styles.Card}>
                   <div className={styles.PopupHeader}>
                     <Dialog.Title className={styles.Title}>Dialog</Dialog.Title>
                     <Dialog.Description className={styles.Description}>
@@ -48,14 +48,14 @@ export default function OutsideScrollDialog() {
                     ))}
                     .
                   </p>
-                </Dialog.Popup>
+                </div>
               </ScrollArea.Content>
             </ScrollArea.Viewport>
             <ScrollArea.Scrollbar className={styles.Scrollbar}>
               <ScrollArea.Thumb className={styles.ScrollbarThumb} />
             </ScrollArea.Scrollbar>
           </ScrollArea.Root>
-        </Dialog.Viewport>
+        </Dialog.Popup>
       </Dialog.Portal>
     </Dialog.Root>
   );

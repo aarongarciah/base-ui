@@ -2,12 +2,11 @@
 import * as React from 'react';
 import { useControlled } from '@base-ui/utils/useControlled';
 import { useStableCallback } from '@base-ui/utils/useStableCallback';
-import { useIsoLayoutEffect } from '@base-ui/utils/useIsoLayoutEffect';
-import { warn } from '@base-ui/utils/warn';
-import { BaseUIComponentProps, Orientation } from '../../internals/types';
+import { BaseUIComponentProps } from '../../internals/types';
 import { CompositeList } from '../../internals/composite/list/CompositeList';
 import { AccordionRootContext } from './AccordionRootContext';
 import { useRenderElement } from '../../internals/useRenderElement';
+import { useBaseUiId } from '../../internals/useBaseUiId';
 import { type BaseUIChangeEventDetails } from '../../internals/createBaseUIEventDetails';
 import { REASONS } from '../../internals/reasons';
 
@@ -29,28 +28,13 @@ export const AccordionRoot = React.forwardRef(function AccordionRoot<Value = any
     render,
     className,
     disabled = false,
-    hiddenUntilFound: hiddenUntilFoundProp,
-    keepMounted: keepMountedProp,
-    loopFocus,
     onValueChange,
     multiple = false,
-    orientation = 'vertical',
     value: valueProp,
     defaultValue: defaultValueProp,
     style,
     ...elementProps
   } = componentProps;
-
-  if (process.env.NODE_ENV !== 'production') {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useIsoLayoutEffect(() => {
-      if (hiddenUntilFoundProp && keepMountedProp === false) {
-        warn(
-          'The `keepMounted={false}` prop on `Accordion.Root` is ignored when `hiddenUntilFound` is enabled, since panels must remain mounted while closed.',
-        );
-      }
-    }, [hiddenUntilFoundProp, keepMountedProp]);
-  }
 
   // memoized to allow omitting both defaultValue and value
   // which would otherwise trigger a warning in useControlled
@@ -77,29 +61,25 @@ export const AccordionRoot = React.forwardRef(function AccordionRoot<Value = any
       nextOpen: boolean,
       details: AccordionRoot.ChangeEventDetails,
     ) => {
+      let nextValue: AccordionRoot.Value<Value>;
+
       if (!multiple) {
-        const nextValue = value[0] === newValue ? [] : [newValue];
-        onValueChange?.(nextValue, details);
-        if (details.isCanceled) {
-          return;
-        }
-        setValue(nextValue);
+        // The native `<details name>` grouping keeps siblings closed, so a single
+        // open value is all the state needs to track.
+        nextValue = nextOpen ? [newValue] : [];
       } else if (nextOpen) {
-        const nextOpenValues = value.slice();
-        nextOpenValues.push(newValue);
-        onValueChange?.(nextOpenValues, details);
-        if (details.isCanceled) {
-          return;
-        }
-        setValue(nextOpenValues);
+        nextValue = value.concat(newValue);
       } else {
-        const nextOpenValues = value.filter((v) => v !== newValue);
-        onValueChange?.(nextOpenValues, details);
-        if (details.isCanceled) {
-          return;
-        }
-        setValue(nextOpenValues);
+        nextValue = value.filter((v) => v !== newValue);
       }
+
+      onValueChange?.(nextValue, details);
+
+      if (details.isCanceled) {
+        return;
+      }
+
+      setValue(nextValue);
     },
   );
 
@@ -107,21 +87,24 @@ export const AccordionRoot = React.forwardRef(function AccordionRoot<Value = any
     () => ({
       value,
       disabled,
-      orientation,
     }),
-    [value, disabled, orientation],
+    [value, disabled],
   );
+
+  // A stable, shared name that groups the items' `<details>` elements so the
+  // browser enforces exclusivity when `multiple` is `false`.
+  const exclusiveName = useBaseUiId();
 
   const contextValue: AccordionRootContext<Value> = React.useMemo(
     () => ({
       disabled,
       handleValueChange,
-      hiddenUntilFound: hiddenUntilFoundProp ?? false,
-      keepMounted: keepMountedProp ?? false,
+      multiple,
+      name: multiple ? undefined : exclusiveName,
       state,
       value,
     }),
-    [disabled, handleValueChange, hiddenUntilFoundProp, keepMountedProp, state, value],
+    [disabled, handleValueChange, multiple, exclusiveName, state, value],
   );
 
   const element = useRenderElement('div', componentProps, {
@@ -151,16 +134,6 @@ export interface AccordionRootState<Value = any> {
    * Whether the component should ignore user interaction.
    */
   disabled: boolean;
-  /**
-   * The component orientation.
-   *
-   * Deprecated following the [APG guidance update](https://github.com/w3c/aria-practices/pull/3434)
-   * to remove roving focus.
-   *
-   * This state no longer affects keyboard focus behavior.
-   * @deprecated
-   */
-  orientation: Orientation;
 }
 
 export interface AccordionRootProps<Value = any> extends BaseUIComponentProps<
@@ -185,28 +158,6 @@ export interface AccordionRootProps<Value = any> extends BaseUIComponentProps<
    */
   disabled?: boolean | undefined;
   /**
-   * Allows the browser's built-in page search to find and expand the panel contents.
-   *
-   * Overrides the `keepMounted` prop and uses `hidden="until-found"`
-   * to hide the element without removing it from the DOM.
-   * @default false
-   */
-  hiddenUntilFound?: boolean | undefined;
-  /**
-   * Whether to keep the element in the DOM while the panel is closed.
-   * This prop is ignored when `hiddenUntilFound` is used.
-   * @default false
-   */
-  keepMounted?: boolean | undefined;
-  /**
-   * Deprecated following the [APG guidance update](https://github.com/w3c/aria-practices/pull/3434)
-   * to remove roving focus.
-   *
-   * This prop no longer affects keyboard focus behavior.
-   * @deprecated
-   */
-  loopFocus?: boolean | undefined;
-  /**
    * Event handler called when an accordion item is expanded or collapsed.
    * Provides the new value as an argument.
    */
@@ -218,15 +169,6 @@ export interface AccordionRootProps<Value = any> extends BaseUIComponentProps<
    * @default false
    */
   multiple?: boolean | undefined;
-  /**
-   * Deprecated following the [APG guidance update](https://github.com/w3c/aria-practices/pull/3434)
-   * to remove roving focus.
-   *
-   * This prop no longer affects keyboard focus behavior.
-   * @default 'vertical'
-   * @deprecated
-   */
-  orientation?: Orientation | undefined;
 }
 
 export type AccordionRootChangeEventReason = typeof REASONS.triggerPress | typeof REASONS.none;

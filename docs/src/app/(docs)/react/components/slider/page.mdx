@@ -154,6 +154,22 @@ For grouped multi-thumb range sliders in forms, [Fieldset](/react/components/fie
 </Field.Root>
 ```
 
+## Accessibility
+
+- **Role**: each `<Slider.Thumb>` renders a native `input[type="range"]`, which carries the implicit `slider` role.
+- **Keyboard interactions** (thumb focused):
+  - <kbd>ArrowUp</kbd> / <kbd>ArrowRight</kbd> — increase the value; <kbd>ArrowDown</kbd> /
+    <kbd>ArrowLeft</kbd> — decrease it (reversed in RTL). Hold <kbd>Shift</kbd> to step by
+    `largeStep`.
+  - <kbd>Page Up</kbd> / <kbd>Page Down</kbd> — step by `largeStep` (default 10).
+  - <kbd>Home</kbd> / <kbd>End</kbd> — jump to `min` / `max` (or the nearest allowed value for a
+    range thumb).
+  - <kbd>Tab</kbd> — moves between thumbs on a multi-thumb slider.
+- **ARIA attributes**: `aria-valuenow`, `aria-orientation`, and `aria-valuetext` are kept in sync automatically; on a two-thumb slider, the default `aria-valuetext` distinguishes "start range" and "end range" values.
+- **Labeling**: see [Labeling a slider](#labeling-a-slider) above—a single thumb takes its name from `<Slider.Label>` or its own `aria-label`; each thumb on a multi-thumb slider needs its own `aria-label` so they aren't announced with the same name.
+
+This pattern follows the ARIA APG [Slider](https://www.w3.org/WAI/ARIA/apg/patterns/slider/) and [Multi-Thumb Slider](https://www.w3.org/WAI/ARIA/apg/patterns/slider-multithumb/) patterns.
+
 ## API reference
 
 import { TypesSlider } from './types';

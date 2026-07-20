@@ -26,6 +26,15 @@ import { Meter } from '@base-ui/react/meter';
 </Meter.Root>;
 ```
 
+## Accessibility
+
+- **Role**: `<Meter.Root>` renders `role="meter"`.
+- **ARIA attributes**: `aria-valuenow`, `aria-valuemin`, and `aria-valuemax` are set from `value`, `min`, and `max`; `aria-valuetext` announces a human-readable value (a formatted percentage by default, or a custom string via `getAriaValueText`).
+- **Not interactive**: a meter is read-only and never receives focus.
+- **Labeling**: render `<Meter.Label>` so `aria-labelledby` gives the meter an accessible name—without it, the meter has none.
+
+This pattern follows the [ARIA `meter` role](https://www.w3.org/WAI/ARIA/apg/patterns/meter/).
+
 ## API reference
 
 import { TypesMeter } from './types';

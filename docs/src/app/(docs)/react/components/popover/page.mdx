@@ -192,6 +192,18 @@ import { DemoPopoverDetachedTriggersFull } from './demos/detached-triggers-full'
 
 <DemoPopoverDetachedTriggersFull />
 
+## Accessibility
+
+- **Role**: `<Popover.Popup>` renders `role="dialog"`.
+- **Labeling**: `<Popover.Title>` provides the popup's accessible name through `aria-labelledby`, and `<Popover.Description>` provides its accessible description through `aria-describedby`. The trigger must also have its own accessible name (visible text or `aria-label`).
+- **Keyboard interactions**:
+  - <kbd>Enter</kbd> / <kbd>Space</kbd> — toggles the popup when the trigger is focused.
+  - <kbd>Tab</kbd> / <kbd>Shift+Tab</kbd> — by default (`modal={false}`), cycles focus between the popup and the rest of the page; with `modal={true}`, focus is trapped inside the popup, so always render `<Popover.Close>` in that case so touch screen reader users can dismiss it.
+  - <kbd>Escape</kbd> — closes the popup.
+- **Focus management**: opening the popup moves focus to its first focusable element by default (or to the popup itself on touch, to avoid triggering the virtual keyboard). Closing it returns focus to the trigger. Popovers opened via `openOnHover` don't move focus at all, since the user hasn't interacted with them directly.
+
+This pattern loosely follows the [ARIA APG Dialog (Modal) pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/); by default a popover is non-modal, closer to a lightweight disclosure than a strict modal dialog.
+
 ## API reference
 
 import { TypesPopover } from './types';

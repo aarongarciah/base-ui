@@ -4,7 +4,7 @@ import { Dialog } from '@base-ui/react/dialog';
 import { ScrollArea } from '@base-ui/react/scroll-area';
 
 export default function OutsideScrollDialog() {
-  const popupRef = React.useRef<HTMLDivElement>(null);
+  const popupRef = React.useRef<HTMLDialogElement>(null);
   return (
     <Dialog.Root>
       <Dialog.Trigger className="flex h-8 items-center justify-center gap-2 border border-neutral-950 dark:border-white bg-white dark:bg-neutral-950 px-3 text-sm leading-none whitespace-nowrap font-normal text-neutral-950 dark:text-white select-none hover:not-data-disabled:bg-neutral-100 dark:hover:not-data-disabled:bg-neutral-800 active:not-data-disabled:bg-neutral-200 dark:active:not-data-disabled:bg-neutral-700 data-disabled:border-neutral-500 data-disabled:text-neutral-500 disabled:border-neutral-500 disabled:text-neutral-500 dark:data-disabled:border-neutral-400 dark:data-disabled:text-neutral-400 focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-neutral-950 dark:focus-visible:outline-white">
@@ -12,18 +12,18 @@ export default function OutsideScrollDialog() {
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Backdrop className="fixed inset-0 bg-black/20 dark:bg-black/50 transition-opacity duration-[600ms] ease-[var(--ease-out-fast)] data-starting-style:opacity-0 data-ending-style:opacity-0 data-ending-style:duration-[350ms] data-ending-style:ease-[cubic-bezier(0.375,0.015,0.545,0.455)] supports-[-webkit-touch-callout:none]:absolute" />
-        <Dialog.Viewport className="group/dialog fixed inset-0">
+        <Dialog.Popup
+          ref={popupRef}
+          initialFocus={popupRef}
+          className="group/dialog fixed inset-0 m-0 h-auto w-auto max-h-none max-w-none border-0 bg-transparent p-0 outline-0 overflow-hidden transition-[translate] duration-[700ms] ease-[cubic-bezier(0.45,1.005,0,1.005)] data-starting-style:translate-y-[100dvh] data-ending-style:translate-y-[100dvh] data-ending-style:duration-[350ms] data-ending-style:ease-[cubic-bezier(0.375,0.015,0.545,0.455)] motion-reduce:transition-none"
+        >
           <ScrollArea.Root
             style={{ position: undefined }}
             className="h-full overscroll-contain group-data-ending-style/dialog:pointer-events-none"
           >
             <ScrollArea.Viewport className="h-full overscroll-contain group-data-ending-style/dialog:pointer-events-none">
               <ScrollArea.Content className="flex min-h-full items-center justify-center">
-                <Dialog.Popup
-                  ref={popupRef}
-                  initialFocus={popupRef}
-                  className="outline-0 relative mx-auto my-16 flex w-[min(40rem,calc(100vw-2rem))] flex-col gap-4 bg-white dark:bg-neutral-950 p-4 text-neutral-950 dark:text-white border border-neutral-950 dark:border-white shadow-[0.25rem_0.25rem_0] shadow-black/12 dark:shadow-none transition-[translate] duration-[700ms] ease-[cubic-bezier(0.45,1.005,0,1.005)] data-starting-style:translate-y-[100dvh] data-ending-style:translate-y-[max(100dvh,100%)] data-ending-style:duration-[350ms] data-ending-style:ease-[cubic-bezier(0.375,0.015,0.545,0.455)] motion-reduce:transition-none"
-                >
+                <div className="relative mx-auto my-16 flex w-[min(40rem,calc(100vw-2rem))] flex-col gap-4 bg-white dark:bg-neutral-950 p-4 text-neutral-950 dark:text-white border border-neutral-950 dark:border-white shadow-[0.25rem_0.25rem_0] shadow-black/12 dark:shadow-none">
                   <div className="relative flex flex-col gap-1 pr-8">
                     <Dialog.Title className="text-base font-bold">Dialog</Dialog.Title>
                     <Dialog.Description className="text-sm text-neutral-600 dark:text-neutral-400">
@@ -64,14 +64,14 @@ export default function OutsideScrollDialog() {
                     ))}
                     .
                   </p>
-                </Dialog.Popup>
+                </div>
               </ScrollArea.Content>
             </ScrollArea.Viewport>
             <ScrollArea.Scrollbar className="pointer-events-none flex w-4 justify-center bg-black/12 dark:bg-white/12 opacity-0 transition-opacity duration-[250ms] data-scrolling:pointer-events-auto data-scrolling:opacity-100 data-scrolling:duration-[75ms] data-scrolling:delay-[0ms] hover:pointer-events-auto hover:opacity-100 hover:duration-[75ms] hover:delay-[0ms] group-data-ending-style/dialog:opacity-0 group-data-ending-style/dialog:duration-[250ms]">
               <ScrollArea.Thumb className="w-full bg-neutral-950 dark:bg-white" />
             </ScrollArea.Scrollbar>
           </ScrollArea.Root>
-        </Dialog.Viewport>
+        </Dialog.Popup>
       </Dialog.Portal>
     </Dialog.Root>
   );

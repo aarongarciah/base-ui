@@ -340,6 +340,25 @@ import { DemoMenuDetachedTriggersFull } from './demos/detached-triggers-full';
 
 <DemoMenuDetachedTriggersFull />
 
+## Accessibility
+
+- **Role**: `<Menu.Trigger>` gets `aria-haspopup="menu"`; `<Menu.Popup>` renders `role="menu"`; items render `role="menuitem"`, `role="menuitemcheckbox"`, or `role="menuitemradio"` depending on their type.
+- **Keyboard interactions**:
+  - <kbd>Enter</kbd> / <kbd>Space</kbd> — opens the menu when the trigger is focused, or activates
+    the highlighted item when the menu is open.
+  - <kbd>ArrowDown</kbd> / <kbd>ArrowUp</kbd> — move the highlight between items (loops by default),
+    or open the menu from the trigger focused on the first/last item.
+  - <kbd>Home</kbd> / <kbd>End</kbd> — jump to the first/last item.
+  - <kbd>ArrowRight</kbd> / <kbd>ArrowLeft</kbd> — open/close a submenu from its trigger.
+  - <kbd>Escape</kbd> — closes the menu (or just the open submenu, unless `closeParentOnEsc` is
+    set).
+  - Typing jumps to a matching item.
+- **Disabled items stay focusable**: they receive `aria-disabled="true"` and remain reachable by arrow keys and <kbd>Tab</kbd>, rather than being skipped—so their existence and reason for being unavailable can still be discovered.
+- **Focus management**: opening the menu with the keyboard moves focus to the first item (or the last, when opened with <kbd>ArrowUp</kbd>); closing it returns focus to the trigger.
+- **Labeling**: the trigger needs visible text or `aria-label`. Use `<Menu.GroupLabel>` inside `<Menu.Group>` or `<Menu.RadioGroup>` to name a group of items.
+
+This pattern follows the [ARIA APG Menu Button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/).
+
 ## API reference
 
 import { TypesMenu } from './types';

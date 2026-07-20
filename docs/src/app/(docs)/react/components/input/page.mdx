@@ -24,6 +24,11 @@ import { Input } from '@base-ui/react/input';
 <Input />;
 ```
 
+## Accessibility
+
+- **The automatic wiring described in the subtitle requires wrapping `<Input>` in [`<Field.Root>`](/react/components/field)**: on its own, `<Input>` is a plain native `<input>` and doesn't pick up `aria-labelledby`, `aria-describedby`, or `aria-invalid`. Inside a `Field.Root`, it receives all of these automatically—see [Field's accessibility notes](/react/components/field#accessibility).
+- Without `Field`, label it directly with a wrapping or sibling `<label>`, per the [Usage guidelines](#usage-guidelines) above.
+
 ## API reference
 
 import { TypesInput } from './types';

@@ -9,7 +9,7 @@ describe('<Dialog.Popup />', () => {
   const { render } = createRenderer();
 
   describeConformance(<Dialog.Popup />, () => ({
-    refInstanceof: window.HTMLDivElement,
+    refInstanceof: window.HTMLDialogElement,
     render: (node) => {
       return render(
         <Dialog.Root open modal={false}>
@@ -628,77 +628,96 @@ describe('<Dialog.Popup />', () => {
       });
     });
 
-    it('respects finalFocus when initialFocus points outside the popup', async () => {
-      function TestComponent() {
-        const initialRef = React.useRef<HTMLInputElement>(null);
-        const finalRef = React.useRef<HTMLInputElement>(null);
-        return (
-          <div>
-            <input data-testid="initial-outside" ref={initialRef} />
-            <Dialog.Root>
-              <Dialog.Backdrop />
-              <Dialog.Trigger>Open</Dialog.Trigger>
-              <Dialog.Portal>
-                <Dialog.Popup initialFocus={initialRef} finalFocus={finalRef}>
-                  <Dialog.Close>Close</Dialog.Close>
-                </Dialog.Popup>
-              </Dialog.Portal>
-            </Dialog.Root>
-            <input data-testid="final-outside" ref={finalRef} />
-          </div>
-        );
-      }
+    // Relies on native modal `<dialog>` focus trapping/inertness, which jsdom does not implement.
+    it.skipIf(isJSDOM)(
+      'respects finalFocus when initialFocus points outside the popup',
+      async () => {
+        function TestComponent() {
+          const initialRef = React.useRef<HTMLInputElement>(null);
+          const finalRef = React.useRef<HTMLInputElement>(null);
+          return (
+            <div>
+              <input data-testid="initial-outside" ref={initialRef} />
+              <Dialog.Root>
+                <Dialog.Backdrop />
+                <Dialog.Trigger>Open</Dialog.Trigger>
+                <Dialog.Portal>
+                  <Dialog.Popup initialFocus={initialRef} finalFocus={finalRef}>
+                    <Dialog.Close>Close</Dialog.Close>
+                  </Dialog.Popup>
+                </Dialog.Portal>
+              </Dialog.Root>
+              <input data-testid="final-outside" ref={finalRef} />
+            </div>
+          );
+        }
 
-      const { user } = await render(<TestComponent />);
+        const { user } = await render(<TestComponent />);
 
-      await user.click(screen.getByText('Open'));
+        await user.click(screen.getByText('Open'));
 
-      await waitFor(() => {
-        expect(screen.getByTestId('initial-outside')).toHaveFocus();
-      });
+        // A native modal `<dialog>` traps focus behind an inert background, so `initialFocus` pointing
+        // outside the popup is ignored and focus stays inside.
+        await waitFor(() => {
+          expect(screen.getByRole('dialog').contains(document.activeElement)).toBe(true);
+        });
+        expect(screen.getByTestId('initial-outside')).not.toHaveFocus();
 
-      await user.click(screen.getByText('Close'));
+        await user.click(screen.getByText('Close'));
 
-      await waitFor(() => {
-        expect(screen.getByTestId('final-outside')).toHaveFocus();
-      });
-    });
+        // `finalFocus` is honored on close, once the dialog leaves the top layer and the background
+        // is interactive again.
+        await waitFor(() => {
+          expect(screen.getByTestId('final-outside')).toHaveFocus();
+        });
+      },
+    );
 
-    it('moves final focus to trigger if initialFocus points outside the popup and finalFocus is not specified', async () => {
-      function TestComponent() {
-        const initialRef = React.useRef<HTMLInputElement>(null);
-        const finalRef = React.useRef<HTMLInputElement>(null);
-        return (
-          <div>
-            <input data-testid="initial-outside" ref={initialRef} />
-            <Dialog.Root>
-              <Dialog.Backdrop />
-              <Dialog.Trigger>Open</Dialog.Trigger>
-              <Dialog.Portal>
-                <Dialog.Popup initialFocus={initialRef}>
-                  <Dialog.Close>Close</Dialog.Close>
-                </Dialog.Popup>
-              </Dialog.Portal>
-            </Dialog.Root>
-            <input data-testid="final-outside" ref={finalRef} />
-          </div>
-        );
-      }
+    // Relies on native modal `<dialog>` focus trapping/inertness, which jsdom does not implement.
+    it.skipIf(isJSDOM)(
+      'moves final focus to trigger if initialFocus points outside the popup and finalFocus is not specified',
+      async () => {
+        function TestComponent() {
+          const initialRef = React.useRef<HTMLInputElement>(null);
+          const finalRef = React.useRef<HTMLInputElement>(null);
+          return (
+            <div>
+              <input data-testid="initial-outside" ref={initialRef} />
+              <Dialog.Root>
+                <Dialog.Backdrop />
+                <Dialog.Trigger>Open</Dialog.Trigger>
+                <Dialog.Portal>
+                  <Dialog.Popup initialFocus={initialRef}>
+                    <Dialog.Close>Close</Dialog.Close>
+                  </Dialog.Popup>
+                </Dialog.Portal>
+              </Dialog.Root>
+              <input data-testid="final-outside" ref={finalRef} />
+            </div>
+          );
+        }
 
-      const { user } = await render(<TestComponent />);
+        const { user } = await render(<TestComponent />);
 
-      await user.click(screen.getByText('Open'));
+        const trigger = screen.getByText('Open');
+        await user.click(trigger);
 
-      await waitFor(() => {
-        expect(screen.getByTestId('initial-outside')).toHaveFocus();
-      });
+        // A native modal `<dialog>` traps focus behind an inert background, so `initialFocus` pointing
+        // outside the popup is ignored and focus stays inside.
+        await waitFor(() => {
+          expect(screen.getByRole('dialog').contains(document.activeElement)).toBe(true);
+        });
+        expect(screen.getByTestId('initial-outside')).not.toHaveFocus();
 
-      await user.click(screen.getByText('Close'));
+        await user.click(screen.getByText('Close'));
 
-      await waitFor(() => {
+        // With no `finalFocus`, closing returns focus to the trigger rather than the outside element.
+        await waitFor(() => {
+          expect(trigger).toHaveFocus();
+        });
         expect(screen.getByTestId('final-outside')).not.toHaveFocus();
-      });
-    });
+      },
+    );
 
     it('uses default behavior when finalFocus returns null', async () => {
       function TestComponent() {

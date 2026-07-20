@@ -8,10 +8,6 @@
     border-bottom: 1px solid var(--gray-t2);
   }
 
-  .AccordionWebsiteHeader {
-    margin: 0;
-  }
-
   .AccordionWebsiteTrigger {
     box-sizing: border-box;
     position: relative;
@@ -29,8 +25,14 @@
     line-height: 1.5rem;
     border: none;
     outline: none;
-    text-align: left;
+    text-align: start;
+    cursor: pointer;
+    list-style: none;
     -webkit-tap-highlight-color: transparent;
+  }
+
+  .AccordionWebsiteTrigger::-webkit-details-marker {
+    display: none;
   }
 
   .AccordionWebsiteTrigger:focus-visible {

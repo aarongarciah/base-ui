@@ -23,6 +23,11 @@ import { Fieldset } from '@base-ui/react/fieldset';
 </Fieldset.Root>;
 ```
 
+## Accessibility
+
+- **`<Fieldset.Root>` renders a native `<fieldset>`**, so setting `disabled` disables every form control nested inside it, including other Base UI roots like `CheckboxGroup`, `RadioGroup`, and `Slider`.
+- **`<Fieldset.Legend>` renders a `<div>`, not a native `<legend>`**: its text still names the fieldset, but through `aria-labelledby` pointing at the legend's `id` rather than the native legend/fieldset association—this is what makes it freely stylable.
+
 ## API reference
 
 import { TypesFieldset } from './types';

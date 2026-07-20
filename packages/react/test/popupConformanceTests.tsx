@@ -72,7 +72,9 @@ export function popupConformanceTests(config: PopupTestConfig) {
             await render(prepareComponent({ root: { open: true } }));
             const popup = getPopup();
             expect(popup).not.toBe(null);
-            expect(popup).toHaveAttribute('role', expectedPopupRole);
+            // Assert the computed role so popups that expose it implicitly (e.g. a native
+            // `<dialog>`) pass without a redundant `role` attribute.
+            expect(screen.getAllByRole(expectedPopupRole, { hidden: true })).toContain(popup);
           });
         }
 

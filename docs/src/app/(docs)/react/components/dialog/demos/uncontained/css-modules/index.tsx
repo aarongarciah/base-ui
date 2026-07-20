@@ -7,14 +7,14 @@ export default function ExampleUncontainedDialog() {
       <Dialog.Trigger className={styles.Button}>Open dialog</Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Backdrop className={styles.Backdrop} />
-        <Dialog.Viewport className={styles.Viewport}>
-          <Dialog.Popup className={styles.PopupRoot}>
+        <Dialog.Popup className={styles.Popup}>
+          <div className={styles.PopupRoot}>
             <Dialog.Close className={styles.Close} aria-label="Close">
               <XIcon />
             </Dialog.Close>
-            <div className={styles.Popup} />
-          </Dialog.Popup>
-        </Dialog.Viewport>
+            <div className={styles.Card} />
+          </div>
+        </Dialog.Popup>
       </Dialog.Portal>
     </Dialog.Root>
   );

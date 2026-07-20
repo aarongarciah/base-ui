@@ -44,41 +44,37 @@
 
 ## Accordion
 
-A set of collapsible panels with headings.
+A set of collapsible panels built on native disclosure elements.
 
 <details>
 
 <summary>Outline</summary>
 
-- Keywords: React Accordion, Accordion Component, Collapsible Content, Expandable Panel, Accessible Accordion, Multi-Panel UI, Disclosure Widget, FAQ Component, Headless React Components, Base UI
+- Keywords: React Accordion, Accordion Component, Collapsible Content, Expandable Panel, Accessible Accordion, Multi-Panel UI, Disclosure Widget, FAQ Component, Headless React Components, Base UI
 - Sections:
   - Anatomy
   - Examples
     - Open multiple panels
+  - Accessibility
   - API reference
     - Root
     - Item
-    - Header
     - Trigger
     - Panel
 - Exports:
   - Accordion - Root
-    - Props: className, defaultValue, disabled, hiddenUntilFound, keepMounted, loopFocus, multiple, onValueChange, orientation, render, style, value
-    - Data Attributes: data-disabled, data-orientation
+    - Props: className, defaultValue, disabled, multiple, onValueChange, render, style, value
+    - Data Attributes: data-disabled
   - Accordion - Trigger
-    - Props: className, nativeButton, render, style
+    - Props: className, render, style
     - Data Attributes: data-disabled, data-panel-open
   - Accordion - Item
     - Props: className, disabled, onOpenChange, render, style, value
     - Data Attributes: data-disabled, data-index, data-open
-  - Accordion - Header
+  - Accordion - Panel
     - Props: className, render, style
     - Data Attributes: data-disabled, data-index, data-open
-  - Accordion - Panel
-    - Props: className, hiddenUntilFound, keepMounted, render, style
-    - Data Attributes: data-disabled, data-ending-style, data-index, data-open, data-orientation, data-starting-style
-    - CSS Variables: --accordion-panel-height, --accordion-panel-width
-- Types: Accordion.Header.Props, Accordion.Header.State, Accordion.Item.ChangeEventDetails, Accordion.Item.ChangeEventReason, Accordion.Item.Props, Accordion.Item.State, Accordion.Panel.Props, Accordion.Panel.State, Accordion.Root.ChangeEventDetails, Accordion.Root.ChangeEventReason, Accordion.Root.Props, Accordion.Root.State, Accordion.Root.Value, Accordion.Trigger.Props, Accordion.Trigger.State
+- Types: Accordion.Item.ChangeEventDetails, Accordion.Item.ChangeEventReason, Accordion.Item.Props, Accordion.Item.State, Accordion.Panel.Props, Accordion.Panel.State, Accordion.Root.ChangeEventDetails, Accordion.Root.ChangeEventReason, Accordion.Root.Props, Accordion.Root.State, Accordion.Root.Value, Accordion.Trigger.Props, Accordion.Trigger.State
 
 </details>
 
@@ -101,6 +97,7 @@ A dialog that requires a user response to proceed.
     - Detached triggers
     - Multiple triggers
     - Controlled mode with multiple triggers
+  - Accessibility
   - API reference
     - Root
     - Trigger
@@ -170,6 +167,7 @@ An input that suggests options as you type.
     - Grid layout
     - Virtualized
       - Memoizing items
+  - Accessibility
   - API reference
     - Root
     - Value
@@ -268,6 +266,7 @@ An easily stylable avatar component.
 - Keywords: React Avatar, Avatar Component, Profile Image UI, User Image, User Avatar, Profile Picture, Account Image, Profile Icon, Initials Fallback, Accessible Avatar, Headless React Components, Customizable Avatar, Base UI
 - Sections:
   - Anatomy
+  - Accessibility
   - API reference
     - Root
     - Image
@@ -302,6 +301,7 @@ A button component that can be rendered as another tag or focusable when disable
     - Rendering as another tag
     - Rendering links as buttons
     - Loading states
+  - Accessibility
   - API reference
 - Exports:
   - Button
@@ -329,6 +329,7 @@ An easily stylable checkbox component.
     - Labeling a checkbox
     - Rendering as a native button
     - Form integration
+  - Accessibility
   - API reference
     - Root
     - Indicator
@@ -363,6 +364,7 @@ Provides shared state to a series of checkboxes.
     - Form integration
     - Parent checkbox
     - Nested parent checkbox
+  - Accessibility
   - API reference
 - Exports:
   - CheckboxGroup
@@ -385,6 +387,7 @@ A collapsible panel controlled by a button.
 - Keywords: React Collapsible, Collapsible Component, Expandable Panel, Toggle Panel Button, Disclosure Widget, Show/Hide Content, Accordion Item, Accessible Disclosure, Headless React Components, Collapsible Trigger Panel, Base UI
 - Sections:
   - Anatomy
+  - Accessibility
   - API reference
     - Root
     - Trigger
@@ -429,6 +432,7 @@ An input combined with a list of predefined items to select.
     - Creatable
     - Virtualized
       - Memoizing items
+  - Accessibility
   - API reference
     - Root
     - Label
@@ -547,6 +551,7 @@ A menu that appears at the pointer on right click or long press.
   - Examples
     - Using with Menu
     - Nested menu
+  - Accessibility
   - API reference
     - Root
     - Trigger
@@ -647,6 +652,7 @@ A popup that opens on top of the entire page.
     - Detached triggers
     - Multiple triggers
     - Controlled mode with multiple triggers
+  - Accessibility
   - API reference
     - Root
     - Trigger
@@ -718,6 +724,7 @@ A panel that slides in from the edge of the screen.
     - Action sheet with separate destructive action
     - Detached triggers
     - Stacking and animations
+  - Accessibility
   - API reference
     - Provider
     - IndentBackground
@@ -793,6 +800,7 @@ A component that provides labeling and validation for form controls.
 - Keywords: React Field Component, Form Field Labeling, Form Label, Input Wrapper, Form Validation, Accessible Form Field, Field Validation UI, Headless React Components, Custom Form Control Wrapper, Form Description Error State, Base UI
 - Sections:
   - Anatomy
+  - Accessibility
   - API reference
     - Root
     - Label
@@ -839,6 +847,7 @@ A native fieldset element with an easily stylable legend.
 - Keywords: React Fieldset, Fieldset Component, Form Field Grouping, Form Fieldset, Form Group, Input Grouping, Custom Legend Styling, Fieldset Legend, Accessible Fieldset, Headless React Components, Form Section Labeling, Base UI
 - Sections:
   - Anatomy
+  - Accessibility
   - API reference
     - Root
     - Legend
@@ -868,6 +877,7 @@ A native form element with consolidated error handling.
     - Submit with a Server Function
     - Submit form values as a JavaScript object
     - Using with Zod
+  - Accessibility
   - API reference
 - Exports:
   - Form
@@ -890,6 +900,7 @@ A native input element that automatically works with [Field](/react/components/f
 - Sections:
   - Usage guidelines
   - Anatomy
+  - Accessibility
   - API reference
 - Exports:
   - Input
@@ -928,6 +939,7 @@ A list of actions in a dropdown, enhanced with keyboard navigation.
     - Animating the Menu
       - Position and Size
       - Content
+  - Accessibility
   - API reference
     - Root
     - Trigger
@@ -1026,6 +1038,7 @@ A menu bar providing commands and options for your application.
 - Keywords: React Menubar, Menubar Component, Application Menu Bar, App Menu, Navigation Bar, Command Bar, Desktop Style Menu, Keyboard Navigation Menu, Accessible Menubar, Headless React Components, Base UI
 - Sections:
   - Anatomy
+  - Accessibility
   - API reference
 - Exports:
   - Menubar
@@ -1048,6 +1061,7 @@ A graphical display of a numeric value within a range.
 - Keywords: React Meter, Meter Component, Progress Meter, Gauge, Level Indicator, Measurement Display, Capacity Indicator, Value Indicator, Rating Meter, Fuel Gauge, Accessible Meter, Headless React Components, Graphical Value Display, Base UI
 - Sections:
   - Anatomy
+  - Accessibility
   - API reference
     - Root
     - Track
@@ -1087,6 +1101,8 @@ A collection of links and menus for website navigation.
     - Nested inline submenus
     - Custom links
     - Large menus
+    - Labeling the navigation landmarks
+  - Accessibility
   - API reference
     - Root
     - List
@@ -1156,6 +1172,7 @@ A numeric input element with increment and decrement buttons, and a scrub area.
 - Sections:
   - Usage guidelines
   - Anatomy
+  - Accessibility
   - API reference
     - Root
     - ScrubArea
@@ -1212,6 +1229,7 @@ A one-time password input composed of individual character slots.
     - Placeholder hints
     - Custom normalization
     - Masked entry
+  - Accessibility
   - API reference
     - Root
     - Input
@@ -1250,6 +1268,7 @@ An accessible popup anchored to a button.
     - Animating the Popover
       - Position and Size
       - Content
+  - Accessibility
   - API reference
     - Root
     - Trigger
@@ -1312,7 +1331,7 @@ A popup that appears when a link is hovered, showing a preview for sighted users
 
 <summary>Outline</summary>
 
-- Keywords: React Preview Card, Preview Card Component, Link Hover Preview, Hover Card React, Hover Card, Link Tooltip, URL Preview, Link Preview Popup, Content Preview, Accessible Preview Popup, Detached Trigger Preview Card, Multiple Preview Card Triggers, Animated Preview Card, Headless React Components, Link Preview UI, Base UI
+- Keywords: React Preview Card, Preview Card Component, Link Hover Preview, Hover Card React, Hover Card, Link Tooltip, URL Preview, Link Preview Popup, Content Preview, Detached Trigger Preview Card, Multiple Preview Card Triggers, Animated Preview Card, Headless React Components, Link Preview UI, Base UI
 - Sections:
   - Usage guidelines
   - Anatomy
@@ -1323,6 +1342,7 @@ A popup that appears when a link is hovered, showing a preview for sighted users
     - Animating the Preview Card
       - Position and Size
       - Content
+  - Accessibility
   - API reference
     - Root
     - Trigger
@@ -1378,6 +1398,7 @@ Displays the status of a task that takes a long time.
 - Keywords: React Progress Bar, Progress Component, Progress Indicator, Loader, Loading Bar, Upload Progress, Download Progress, Task Status Indicator, Determinate Progress, Indeterminate Progress, Accessible Progress, Headless React Components, Loading Indicator, Base UI
 - Sections:
   - Anatomy
+  - Accessibility
   - API reference
     - Root
     - Track
@@ -1422,6 +1443,7 @@ An easily stylable radio button component.
     - Labeling a radio group
     - Rendering as a native button
     - Form integration
+  - Accessibility
   - API reference
     - RadioGroup
     - Root
@@ -1454,6 +1476,7 @@ A native scroll container with custom scrollbars.
     - Both scrollbars
     - Gradient scroll fade
     - Combining with Tabs
+  - Accessibility
   - API reference
     - Root
     - Viewport
@@ -1509,6 +1532,7 @@ A common form component for choosing a predefined value in a dropdown menu.
     - Multiple selection
     - Object values
     - Grouped
+  - Accessibility
   - API reference
     - Root
     - Label
@@ -1597,6 +1621,7 @@ A separator element accessible to screen readers.
 - Keywords: React Separator, Divider Component, Divider, Horizontal Rule, Horizontal Divider, Vertical Divider, Visual Separator, Section Divider, HR, Accessible Separator, Screen Reader Separator, Headless React Components, Base UI
 - Sections:
   - Anatomy
+  - Accessibility
   - API reference
 - Exports:
   - Separator
@@ -1626,6 +1651,7 @@ An easily stylable range input.
     - Labeling a slider
     - Vertical
     - Form integration
+  - Accessibility
   - API reference
     - Root
     - Label
@@ -1677,6 +1703,7 @@ A control that indicates whether a setting is on or off.
     - Labeling a switch
     - Rendering as a native button
     - Form integration
+  - Accessibility
   - API reference
     - Root
     - Thumb
@@ -1706,6 +1733,7 @@ A component for toggling between related panels on the same page.
   - Anatomy
   - Examples
     - Links
+  - Accessibility
   - API reference
     - Root
     - List
@@ -1757,6 +1785,7 @@ Generates toast notifications.
     - Custom
     - Deduplicated toast
     - Varying heights
+  - Accessibility
   - API reference
     - Provider
     - Portal
@@ -1829,6 +1858,7 @@ A two-state button that can be on or off.
 - Keywords: React Toggle, Toggle Button Component, Two State Button, Press Button, Push Toggle, Pressed State Button, Toggle Control, ARIA Pressed Control, Accessible Toggle, Headless React Components, Base UI
 - Sections:
   - Anatomy
+  - Accessibility
   - API reference
 - Exports:
   - Toggle
@@ -1853,6 +1883,7 @@ Provides a shared state to a series of toggle buttons.
   - Anatomy
   - Examples
     - Multiple
+  - Accessibility
   - API reference
 - Exports:
   - ToggleGroup
@@ -1880,6 +1911,7 @@ A container for grouping a set of buttons and controls.
     - Using with Menu
     - Using with Tooltip
     - Using with NumberField
+  - Accessibility
   - API reference
     - Root
     - Button
@@ -1935,6 +1967,7 @@ A popup that appears when an element is hovered or focused, showing a hint for s
     - Animating the Tooltip
       - Position and Size
       - Content
+  - Accessibility
   - API reference
     - Provider
     - Root

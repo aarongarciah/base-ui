@@ -20,7 +20,7 @@ So don't rewrite this file — take one beat before writing code to fit the outp
 3. **Mind the footguns.** Frameworks reintroduce hazards plain HTML doesn't have: client-side routing that never moves focus, template escape hatches that enable XSS, component libraries that bury native semantics. When the stack matches a reference file below, **read it first** — it covers only the deltas from the HTML baseline.
 
 | Stack                          | Read                                              |
-| ------------------------------ | ------------------------------------------------- |
+| :----------------------------- | :------------------------------------------------ |
 | React / Next.js / Preact       | [react.md](references/react.md)                   |
 | Vue / Nuxt                     | [vue.md](references/vue.md)                       |
 | Svelte / SvelteKit             | [svelte.md](references/svelte.md)                 |
@@ -146,12 +146,7 @@ The native `disabled` attribute removes a `<button>` from the tab order **and** 
 <button type="submit">Submit</button>
 
 <!-- Non-submit control — focusable, announced as unavailable, action suppressed in JS -->
-<button
-  type="button"
-  aria-label="Scroll to next"
-  aria-disabled="true"
-  onclick="scrollNext()"
->
+<button type="button" aria-label="Scroll to next" aria-disabled="true" onclick="scrollNext()">
   <svg aria-hidden="true">...</svg>
 </button>
 ```
@@ -165,9 +160,7 @@ A toggle button with `aria-expanded` already announces its state — "Menu, butt
 <button aria-expanded="false" aria-label="Open menu">...</button>
 
 <!-- Do — constant name; aria-expanded carries open/closed -->
-<button aria-expanded="false" aria-controls="menu" aria-label="Menu">
-  ...
-</button>
+<button aria-expanded="false" aria-controls="menu" aria-label="Menu">...</button>
 ```
 
 ### Icon-Only Controls Need an Accessible Name
@@ -248,9 +241,7 @@ Folding a hint into the name breaks three ways: `aria-label` overrides inner con
 </button>
 
 <!-- Do — clean name, hint as a description -->
-<a href="..." target="_blank" rel="noopener" aria-describedby="new-tab-hint"
-  >Share on Facebook</a
->
+<a href="..." target="_blank" rel="noopener" aria-describedby="new-tab-hint">Share on Facebook</a>
 
 <!-- Render a repeated hint once, reference it everywhere by id -->
 <span id="new-tab-hint" hidden>opens in a new tab</span>
@@ -312,10 +303,7 @@ Use native `<dialog>` with `showModal()`. Focus trapping and Escape key handling
   <button type="button" onclick="this.closest('dialog').close()">Close</button>
 </dialog>
 
-<button
-  type="button"
-  onclick="document.getElementById('my-dialog').showModal()"
->
+<button type="button" onclick="document.getElementById('my-dialog').showModal()">
   Open dialog
 </button>
 ```
@@ -462,7 +450,7 @@ If you only know the name, grep the title (`'Contrast (Minimum)'`, `'Bypass Bloc
 `aria.md` is a verbatim Markdown dump — grep by content keyword, not by guessing a heading. Search the role or attribute itself (`aria-expanded`, `Name, Role, Value`) — that always hits — then read around the hit or a known range from the table below.
 
 | File                                                                     | Spec (size)                                            | Reach for it when                                                                                                                                                                                        | Key sections (line ranges)                                                                                                                                                                                                                      |
-| ------------------------------------------------------------------------ | ------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| :----------------------------------------------------------------------- | :----------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `standards.md`                                                           | External links index (~1 KB)                           | You need the canonical online source to cite — WCAG Understanding, quickref, WAI-ARIA spec, APG, WebAIM, W3C validator                                                                                   | Read whole; it's short                                                                                                                                                                                                                          |
 | `react.md` · `vue.md` · `svelte.md` · `angular.md` · `web-components.md` | Per-stack a11y deltas (~2–3 KB each)                   | The project uses that framework — translate the HTML examples into its idioms and avoid its specific footguns (routing focus, template XSS, id/shadow-boundary rules)                                    | Read the one matching the stack, whole; each is short                                                                                                                                                                                           |
 | `patterns.md`                                                            | Component patterns (~5 KB)                             | Full markup/rationale for the components the body summarizes — carousel, live regions & alerts, form errors — plus combobox, tabs, switch, and the APG links                                             | Read whole; it's short                                                                                                                                                                                                                          |

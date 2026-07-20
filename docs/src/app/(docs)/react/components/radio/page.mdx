@@ -115,6 +115,20 @@ Use [Field](/react/components/field) and [Fieldset](/react/components/fieldset) 
 </Form>
 ```
 
+## Accessibility
+
+- **Role**: `<RadioGroup>` renders `role="radiogroup"`; each `<Radio.Root>` renders `role="radio"` on its visible control (a `<span>` by default, or a `<button>` with `nativeButton`).
+- **Keyboard interactions**:
+  - <kbd>ArrowUp</kbd> / <kbd>ArrowDown</kbd> / <kbd>ArrowLeft</kbd> / <kbd>ArrowRight</kbd> — move
+    roving focus between radios, looping by default, and **select the newly focused radio**.
+  - <kbd>Space</kbd> — selects the focused radio (redundant once arrow keys have already selected
+    it, but needed for the first radio focused by <kbd>Tab</kbd>).
+  - <kbd>Home</kbd> / <kbd>End</kbd> are not supported.
+- **ARIA attributes**: `aria-checked` reflects each radio's selected state; `<Radio.Indicator>` is purely presentational.
+- **Labeling**: see [Labeling a radio group](#labeling-a-radio-group) above—the group needs its own accessible name in addition to each radio's own label.
+
+This pattern follows the [ARIA APG Radio Group pattern](https://www.w3.org/WAI/ARIA/apg/patterns/radio/).
+
 ## API reference
 
 ### RadioGroup

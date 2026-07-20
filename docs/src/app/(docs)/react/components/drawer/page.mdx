@@ -363,6 +363,19 @@ Use `--drawer-swipe-progress` to fade the backdrop as the drawer is swiped, and 
 }
 ```
 
+## Accessibility
+
+- **Role**: `<Drawer.Popup>` renders `role="dialog"`, the same as [Dialog](/react/components/dialog#accessibility).
+- **Labeling**: `<Drawer.Title>` provides the popup's accessible name through `aria-labelledby`, and `<Drawer.Description>` provides its accessible description through `aria-describedby`. Always render a title, even if it's visually hidden.
+- **Keyboard interactions**:
+  - <kbd>Tab</kbd> / <kbd>Shift+Tab</kbd> — when `modal` is `true` (the default), cycles focus
+    between the popup's focusable elements without leaving it.
+  - <kbd>Escape</kbd> — requests to close the drawer, same as swiping it away or clicking `<Drawer.Close>`.
+- **Focus management**: unlike Dialog, opening a drawer moves focus to the popup itself rather than its first focusable element, since the popup usually needs to become the scroll container for touch and keyboard users first. Closing it returns focus to the trigger.
+- **Swipe-to-dismiss is a supplementary gesture**: it isn't available to screen reader or keyboard users, so always render `<Drawer.Close>` as a reachable alternative.
+
+This pattern extends the [ARIA APG Dialog (Modal) pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/).
+
 ## API reference
 
 import { TypesDrawer } from './types';

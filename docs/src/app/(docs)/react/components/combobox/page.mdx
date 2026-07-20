@@ -13,7 +13,7 @@ import { DemoComboboxHero } from './demos/hero';
 ## Usage guidelines
 
 - **Combobox is a filterable Select**: Use Combobox when the input is restricted to a set of predefined selectable items, similar to [Select](/react/components/select) but whose items are filterable using an input. Prefer using Combobox over Select when the number of items is sufficiently large to warrant filtering.
-- **Avoid for simple search widgets**: Combobox does not allow free-form text input. For search widgets, consider using [Autocomplete](/react/components/autocomplete) instead.
+- **Avoid for simple search widgets**: typing in Combobox only filters the predefined items—the input can't commit a value outside that set. For search widgets that accept free-form text, consider using [Autocomplete](/react/components/autocomplete) instead.
 - **Avoid when not rendering an input**: Use [Select](/react/components/select) instead of Combobox if no input is being rendered, which includes accessibility features specific to a listbox without an input.
 - **Form controls must have an accessible name**: If `<Combobox.Input>` is the form control, label it with a native `<label>` or `<Field.Label>`, or provide an `aria-label` when no visible label is rendered. `<Combobox.Label>` labels `<Combobox.Trigger>` and is intended for the [input-inside-popup](#input-inside-popup) pattern, where the trigger is the form control. See the [forms guide](/react/handbook/forms).
 
@@ -235,6 +235,21 @@ const FruitItem = React.memo(function FruitItem({ item }: { item: Fruit }) {
 
 <Combobox.List>{(item: Fruit) => <FruitItem key={item.id} item={item} />}</Combobox.List>;
 ```
+
+## Accessibility
+
+- **Role**: `<Combobox.Input>` renders `role="combobox"`, and `<Combobox.List>` renders `role="listbox"` (or `role="grid"` in grid layouts).
+- **Virtual focus**: focus stays on the input while navigating the list. The highlighted item is communicated through `aria-activedescendant` rather than by moving DOM focus.
+- **Keyboard interactions**:
+  - <kbd>ArrowDown</kbd> / <kbd>ArrowUp</kbd> — opens the popup if closed, then moves the highlight
+    between items, looping by default.
+  - <kbd>Enter</kbd> — selects the highlighted item.
+  - <kbd>Escape</kbd> — closes the popup.
+  - In `multiple` mode, <kbd>ArrowLeft</kbd> / <kbd>ArrowRight</kbd> move between selection chips, and <kbd>Backspace</kbd> removes the last or highlighted chip.
+- **ARIA attributes**: selected items get `aria-selected="true"`; the list gets `aria-multiselectable="true"` in `multiple` mode.
+- **Labeling**: see [Usage guidelines](#usage-guidelines) above—label `<Combobox.Input>` directly, or use `<Combobox.Label>` to label `<Combobox.Trigger>` in the [input-inside-popup](#input-inside-popup) pattern. `<Combobox.ChipRemove>` needs its own `aria-label` per chip. Keep `<Combobox.Status>` and `<Combobox.Empty>` mounted—they're `aria-live="polite"` regions that announce result counts and empty states.
+
+This pattern loosely follows the [ARIA APG Combobox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/).
 
 ## API reference
 

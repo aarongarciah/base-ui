@@ -30,6 +30,16 @@ import { DemoToggleGroupMultiple } from './demos/multiple';
 
 <DemoToggleGroupMultiple />
 
+## Accessibility
+
+- **Role**: `<ToggleGroup>` renders `role="group"`; each child [`<Toggle>`](/react/components/toggle#accessibility) keeps `aria-pressed`, not radio semantics—selecting one item doesn't imply the others are unselectable, even when the group is single-selection.
+- **Keyboard interactions** (roving tabindex, standalone only—when nested in a `Toolbar`, the toolbar's composite takes over):
+  - <kbd>ArrowLeft</kbd> / <kbd>ArrowRight</kbd> (or <kbd>ArrowUp</kbd> / <kbd>ArrowDown</kbd> when
+    vertical) — move focus between toggles, looping by default.
+  - <kbd>Home</kbd> / <kbd>End</kbd> — jump to the first/last toggle.
+  - <kbd>Enter</kbd> / <kbd>Space</kbd> — toggles the focused item's pressed state.
+- **Labeling**: the group needs its own accessible name via `aria-label` or `aria-labelledby`; each toggle needs its own visible label and a `value` prop.
+
 ## API reference
 
 import { TypesToggleGroup } from './types';

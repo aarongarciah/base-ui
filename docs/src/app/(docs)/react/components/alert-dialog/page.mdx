@@ -83,7 +83,7 @@ function ExampleMenu() {
 
 This example shows a nested confirmation dialog that opens if the text entered in the parent dialog is going to be discarded.
 
-To implement this, both dialogs should be controlled. The confirmation dialog may be opened when `onOpenChange` callback of the parent dialog receives a request to close. This way, the confirmation is automatically shown when the user clicks the backdrop, presses the Esc key, or clicks a close button.
+To implement this, both dialogs should be controlled. The confirmation dialog may be opened when `onOpenChange` callback of the parent dialog receives a request to close. This way, the confirmation is automatically shown when the user presses the Esc key or clicks a close button—unlike a plain [Dialog](/react/components/dialog#close-confirmation), clicking the backdrop doesn't request a close, since an alert dialog requires an explicit response.
 
 Use the `[data-nested-dialog-open]` selector and the `var(--nested-dialogs)` CSS variable to customize the styling of the parent dialog. Backdrops of the child dialogs won't be rendered so that you can present the parent dialog in a clean way behind the one on top of it.
 
@@ -192,6 +192,20 @@ Instead, the `onOpenChange` callback receives an additional argument, `eventDeta
 import { DemoAlertDialogDetachedTriggersControlled } from './demos/detached-triggers-controlled';
 
 <DemoAlertDialogDetachedTriggersControlled />
+
+## Accessibility
+
+- **Role**: `<AlertDialog.Popup>` renders `role="alertdialog"`, and focus is always trapped inside it—`modal` isn't exposed as a prop, since an alert dialog must be resolved before returning to the rest of the page.
+- **Labeling**: `<AlertDialog.Title>` provides the popup's accessible name through `aria-labelledby`, and `<AlertDialog.Description>` provides its accessible description through `aria-describedby`. Always render a title.
+- **Keyboard interactions**:
+  - <kbd>Tab</kbd> / <kbd>Shift+Tab</kbd> — cycle focus between the popup's focusable elements
+    without leaving it.
+  - <kbd>Escape</kbd> — requests to close the dialog, same as clicking `<AlertDialog.Close>`. Cancel this in `onOpenChange` if the response is mandatory.
+  - <kbd>Enter</kbd> / <kbd>Space</kbd> — activates the focused button.
+- **No backdrop dismissal**: clicking `<AlertDialog.Backdrop>` never closes the dialog. This is intentional—unlike [Dialog](/react/components/dialog), an alert dialog demands an explicit response from one of its actions.
+- **Focus management**: opening the dialog moves focus to its first focusable element (or to the popup itself on touch, to avoid triggering the virtual keyboard). Closing it returns focus to the trigger that opened it.
+
+This pattern follows the [ARIA APG Alert Dialog pattern](https://www.w3.org/WAI/ARIA/apg/patterns/alertdialog/).
 
 ## API reference
 

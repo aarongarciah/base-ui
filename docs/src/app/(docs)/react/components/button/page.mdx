@@ -56,6 +56,13 @@ import { DemoButtonLoading } from './demos/loading';
 
 <DemoButtonLoading />
 
+## Accessibility
+
+- **Role**: a default `<Button>` renders a native `<button>`; with `nativeButton={false}` it renders `role="button"` on whatever element `render` provides.
+- **Keyboard interactions**: native buttons get activation on <kbd>Enter</kbd> and <kbd>Space</kbd> for free from the browser. Non-native buttons (`nativeButton={false}`) get the same behavior from Base UI—<kbd>Enter</kbd> activates on keydown, <kbd>Space</kbd> activates on keyup, matching native button semantics.
+- **Disabled state**: a disabled native button is removed from the tab order (native `disabled`). Set `focusableWhenDisabled` to keep it focusable with `aria-disabled="true"` instead—useful when the button needs a tooltip explaining why it's unavailable, since a focusable control can still be discovered and described.
+- **Labeling**: the button's text content provides its accessible name; icon-only buttons need `aria-label`.
+
 ## API reference
 
 import { TypesButton } from './types';

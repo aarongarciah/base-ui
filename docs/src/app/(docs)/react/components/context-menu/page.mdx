@@ -75,6 +75,15 @@ import { DemoContextMenuSubmenu } from './demos/submenu';
 
 <DemoContextMenuSubmenu />
 
+## Accessibility
+
+- **No keyboard path to open the menu**: the trigger has no ARIA trigger semantics (`aria-haspopup`, `aria-expanded`) and can only be activated by right-click or long press. See [Usage guidelines](#usage-guidelines) above—always provide a visible, keyboard-reachable control for the same actions.
+- **Role**: once open, `<ContextMenu.Popup>` renders `role="menu"`, with items as `role="menuitem"` / `role="menuitemcheckbox"` / `role="menuitemradio"`, the same as [Menu](/react/components/menu#accessibility).
+- **Keyboard interactions** (once open): <kbd>ArrowUp</kbd> / <kbd>ArrowDown</kbd> move the highlight, <kbd>Home</kbd> / <kbd>End</kbd> jump to the first/last item, <kbd>Enter</kbd> / <kbd>Space</kbd> activate the highlighted item, and <kbd>Escape</kbd> closes the menu. Typing jumps to a matching item.
+- **Focus management**: opening the menu moves focus to its first item; closing it returns focus to whatever had focus before the menu opened, since there's no trigger element to return to.
+
+This pattern follows the [ARIA APG Menu and Menubar pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu/).
+
 ## API reference
 
 import { TypesContextMenu } from './types';

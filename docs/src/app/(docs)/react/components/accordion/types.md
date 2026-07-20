@@ -11,27 +11,22 @@ Renders a `<div>` element.
 
 **Root Props:**
 
-| Prop             | Type                                                                                                | Default      | Description                                                                                                                                                                                                 |
-| :--------------- | :-------------------------------------------------------------------------------------------------- | :----------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| defaultValue     | `Value[]`                                                                                           | -            | The uncontrolled value of the item(s) that should be initially expanded. To render a controlled accordion, use the `value` prop instead.                                                                    |
-| value            | `Value[]`                                                                                           | -            | The controlled value of the item(s) that should be expanded. To render an uncontrolled accordion, use the `defaultValue` prop instead.                                                                      |
-| onValueChange    | `((value: Value[], eventDetails: Accordion.Root.ChangeEventDetails) => void)`                       | -            | Event handler called when an accordion item is expanded or collapsed.&#xA;Provides the new value as an argument.                                                                                            |
-| hiddenUntilFound | `boolean`                                                                                           | `false`      | Allows the browser's built-in page search to find and expand the panel contents. Overrides the `keepMounted` prop and uses `hidden="until-found"`&#xA;to hide the element without removing it from the DOM. |
-| loopFocus        | `boolean`                                                                                           | -            | Deprecated following the [APG guidance update](https://github.com/w3c/aria-practices/pull/3434)&#xA;to remove roving focus. This prop no longer affects keyboard focus behavior.                            |
-| multiple         | `boolean`                                                                                           | `false`      | Whether multiple items can be open at the same time.                                                                                                                                                        |
-| disabled         | `boolean`                                                                                           | `false`      | Whether the component should ignore user interaction.                                                                                                                                                       |
-| orientation      | `Orientation`                                                                                       | `'vertical'` | Deprecated following the [APG guidance update](https://github.com/w3c/aria-practices/pull/3434)&#xA;to remove roving focus. This prop no longer affects keyboard focus behavior.                            |
-| className        | `string \| ((state: Accordion.Root.State<Value>) => string \| undefined)`                           | -            | CSS class applied to the element, or a function that&#xA;returns a class based on the component's state.                                                                                                    |
-| style            | `React.CSSProperties \| ((state: Accordion.Root.State<Value>) => React.CSSProperties \| undefined)` | -            | Style applied to the element, or a function that&#xA;returns a style object based on the component's state.                                                                                                 |
-| keepMounted      | `boolean`                                                                                           | `false`      | Whether to keep the element in the DOM while the panel is closed.&#xA;This prop is ignored when `hiddenUntilFound` is used.                                                                                 |
-| render           | `ReactElement \| ((props: HTMLProps, state: Accordion.Root.State<Value>) => ReactElement)`          | -            | Allows you to replace the component's HTML element&#xA;with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render.               |
+| Prop          | Type                                                                                                | Default | Description                                                                                                                                                                                   |
+| :------------ | :-------------------------------------------------------------------------------------------------- | :------ | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| defaultValue  | `Value[]`                                                                                           | -       | The uncontrolled value of the item(s) that should be initially expanded. To render a controlled accordion, use the `value` prop instead.                                                      |
+| value         | `Value[]`                                                                                           | -       | The controlled value of the item(s) that should be expanded. To render an uncontrolled accordion, use the `defaultValue` prop instead.                                                        |
+| onValueChange | `((value: Value[], eventDetails: Accordion.Root.ChangeEventDetails) => void)`                       | -       | Event handler called when an accordion item is expanded or collapsed.&#xA;Provides the new value as an argument.                                                                              |
+| multiple      | `boolean`                                                                                           | `false` | Whether multiple items can be open at the same time.                                                                                                                                          |
+| disabled      | `boolean`                                                                                           | `false` | Whether the component should ignore user interaction.                                                                                                                                         |
+| className     | `string \| ((state: Accordion.Root.State<Value>) => string \| undefined)`                           | -       | CSS class applied to the element, or a function that&#xA;returns a class based on the component's state.                                                                                      |
+| style         | `React.CSSProperties \| ((state: Accordion.Root.State<Value>) => React.CSSProperties \| undefined)` | -       | Style applied to the element, or a function that&#xA;returns a style object based on the component's state.                                                                                   |
+| render        | `ReactElement \| ((props: HTMLProps, state: Accordion.Root.State<Value>) => ReactElement)`          | -       | Allows you to replace the component's HTML element&#xA;with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. |
 
 **Root Data Attributes:**
 
-| Attribute        | Type | Description                                 |
-| :--------------- | :--- | :------------------------------------------ |
-| data-orientation | -    | Indicates the orientation of the accordion. |
-| data-disabled    | -    | Present when the accordion is disabled.     |
+| Attribute     | Type | Description                             |
+| :------------ | :--- | :-------------------------------------- |
+| data-disabled | -    | Present when the accordion is disabled. |
 
 ### Root.Props
 
@@ -45,16 +40,6 @@ type AccordionRootState<TValue = any> = {
   value: TValue[];
   /** Whether the component should ignore user interaction. */
   disabled: boolean;
-  /**
-   * The component orientation.
-   *
-   * Deprecated following the [APG guidance update](https://github.com/w3c/aria-practices/pull/3434)
-   * to remove roving focus.
-   *
-   * This state no longer affects keyboard focus behavior.
-   * @deprecated
-   */
-  orientation: Orientation;
 };
 ```
 
@@ -92,17 +77,16 @@ type AccordionRootValue<TValue = any> = TValue[];
 
 ### Trigger
 
-A button that opens and closes the corresponding panel.
-Renders a `<button>` element.
+A summary that labels and toggles the corresponding panel.
+Renders a `<summary>` element.
 
 **Trigger Props:**
 
-| Prop         | Type                                                                                            | Default | Description                                                                                                                                                                                   |
-| :----------- | :---------------------------------------------------------------------------------------------- | :------ | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| nativeButton | `boolean`                                                                                       | `true`  | Whether the component renders a native `<button>` element when replacing it&#xA;via the `render` prop.&#xA;Set to `false` if the rendered element is not a button (for example, `<div>`).     |
-| className    | `string \| ((state: Accordion.Trigger.State) => string \| undefined)`                           | -       | CSS class applied to the element, or a function that&#xA;returns a class based on the component's state.                                                                                      |
-| style        | `React.CSSProperties \| ((state: Accordion.Trigger.State) => React.CSSProperties \| undefined)` | -       | Style applied to the element, or a function that&#xA;returns a style object based on the component's state.                                                                                   |
-| render       | `ReactElement \| ((props: HTMLProps, state: Accordion.Trigger.State) => ReactElement)`          | -       | Allows you to replace the component's HTML element&#xA;with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. |
+| Prop      | Type                                                                                            | Default | Description                                                                                                                                                                                   |
+| :-------- | :---------------------------------------------------------------------------------------------- | :------ | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| className | `string \| ((state: Accordion.Trigger.State) => string \| undefined)`                           | -       | CSS class applied to the element, or a function that&#xA;returns a class based on the component's state.                                                                                      |
+| style     | `React.CSSProperties \| ((state: Accordion.Trigger.State) => React.CSSProperties \| undefined)` | -       | Style applied to the element, or a function that&#xA;returns a style object based on the component's state.                                                                                   |
+| render    | `ReactElement \| ((props: HTMLProps, state: Accordion.Trigger.State) => ReactElement)`          | -       | Allows you to replace the component's HTML element&#xA;with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. |
 
 **Trigger Data Attributes:**
 
@@ -119,33 +103,19 @@ Re-export of [Trigger](#trigger) props.
 
 ```typescript
 type AccordionTriggerState = {
-  /** Whether the accordion item's panel is currently hidden. */
-  hidden: boolean;
   /** The item index. */
   index: number;
-  /** Whether the component is open. */
-  open: boolean;
-  /** The current value. */
-  value: any[];
   /** Whether the component should ignore user interaction. */
   disabled: boolean;
-  /**
-   * The component orientation.
-   *
-   * Deprecated following the [APG guidance update](https://github.com/w3c/aria-practices/pull/3434)
-   * to remove roving focus.
-   *
-   * This state no longer affects keyboard focus behavior.
-   * @deprecated
-   */
-  orientation: Orientation;
+  /** Whether the component is open. */
+  open: boolean;
 };
 ```
 
 ### Item
 
-Groups an accordion header with the corresponding panel.
-Renders a `<div>` element.
+Groups an accordion trigger with the corresponding panel.
+Renders a `<details>` element.
 
 **Item Props:**
 
@@ -183,26 +153,12 @@ Re-export of [Item](#item) props.
 
 ```typescript
 type AccordionItemState = {
-  /** Whether the accordion item's panel is currently hidden. */
-  hidden: boolean;
   /** The item index. */
   index: number;
-  /** Whether the component is open. */
-  open: boolean;
-  /** The current value. */
-  value: any[];
   /** Whether the component should ignore user interaction. */
   disabled: boolean;
-  /**
-   * The component orientation.
-   *
-   * Deprecated following the [APG guidance update](https://github.com/w3c/aria-practices/pull/3434)
-   * to remove roving focus.
-   *
-   * This state no longer affects keyboard focus behavior.
-   * @deprecated
-   */
-  orientation: Orientation;
+  /** Whether the component is open. */
+  open: boolean;
 };
 ```
 
@@ -232,90 +188,29 @@ type AccordionItemChangeEventDetails = (
 };
 ```
 
-### Header
-
-A heading that labels the corresponding panel.
-Renders an `<h3>` element.
-
-**Header Props:**
-
-| Prop      | Type                                                                                           | Default | Description                                                                                                                                                                                   |
-| :-------- | :--------------------------------------------------------------------------------------------- | :------ | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| className | `string \| ((state: Accordion.Header.State) => string \| undefined)`                           | -       | CSS class applied to the element, or a function that&#xA;returns a class based on the component's state.                                                                                      |
-| style     | `React.CSSProperties \| ((state: Accordion.Header.State) => React.CSSProperties \| undefined)` | -       | Style applied to the element, or a function that&#xA;returns a style object based on the component's state.                                                                                   |
-| render    | `ReactElement \| ((props: HTMLProps, state: Accordion.Header.State) => ReactElement)`          | -       | Allows you to replace the component's HTML element&#xA;with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. |
-
-**Header Data Attributes:**
-
-| Attribute     | Type     | Description                                  |
-| :------------ | :------- | :------------------------------------------- |
-| data-open     | -        | Present when the accordion item is open.     |
-| data-disabled | -        | Present when the accordion item is disabled. |
-| data-index    | `number` | Indicates the index of the accordion item.   |
-
-### Header.Props
-
-Re-export of [Header](#header) props.
-
-### Header.State
-
-```typescript
-type AccordionHeaderState = {
-  /** Whether the accordion item's panel is currently hidden. */
-  hidden: boolean;
-  /** The item index. */
-  index: number;
-  /** Whether the component is open. */
-  open: boolean;
-  /** The current value. */
-  value: any[];
-  /** Whether the component should ignore user interaction. */
-  disabled: boolean;
-  /**
-   * The component orientation.
-   *
-   * Deprecated following the [APG guidance update](https://github.com/w3c/aria-practices/pull/3434)
-   * to remove roving focus.
-   *
-   * This state no longer affects keyboard focus behavior.
-   * @deprecated
-   */
-  orientation: Orientation;
-};
-```
-
 ### Panel
 
-A collapsible panel with the accordion item contents.
+The collapsible panel with the accordion item contents.
 Renders a `<div>` element.
+
+The panel is the `<details>` content, so it stays mounted while closed and
+can be animated with modern CSS via the `::details-content` pseudo-element.
 
 **Panel Props:**
 
-| Prop             | Type                                                                                          | Default | Description                                                                                                                                                                                                 |
-| :--------------- | :-------------------------------------------------------------------------------------------- | :------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| hiddenUntilFound | `boolean`                                                                                     | `false` | Allows the browser's built-in page search to find and expand the panel contents. Overrides the `keepMounted` prop and uses `hidden="until-found"`&#xA;to hide the element without removing it from the DOM. |
-| className        | `string \| ((state: Accordion.Panel.State) => string \| undefined)`                           | -       | CSS class applied to the element, or a function that&#xA;returns a class based on the component's state.                                                                                                    |
-| style            | `React.CSSProperties \| ((state: Accordion.Panel.State) => React.CSSProperties \| undefined)` | -       | Style applied to the element, or a function that&#xA;returns a style object based on the component's state.                                                                                                 |
-| keepMounted      | `boolean`                                                                                     | `false` | Whether to keep the element in the DOM while the panel is closed.&#xA;This prop is ignored when `hiddenUntilFound` is used.                                                                                 |
-| render           | `ReactElement \| ((props: HTMLProps, state: Accordion.Panel.State) => ReactElement)`          | -       | Allows you to replace the component's HTML element&#xA;with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render.               |
+| Prop      | Type                                                                                          | Default | Description                                                                                                                                                                                   |
+| :-------- | :-------------------------------------------------------------------------------------------- | :------ | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| className | `string \| ((state: Accordion.Panel.State) => string \| undefined)`                           | -       | CSS class applied to the element, or a function that&#xA;returns a class based on the component's state.                                                                                      |
+| style     | `React.CSSProperties \| ((state: Accordion.Panel.State) => React.CSSProperties \| undefined)` | -       | Style applied to the element, or a function that&#xA;returns a style object based on the component's state.                                                                                   |
+| render    | `ReactElement \| ((props: HTMLProps, state: Accordion.Panel.State) => ReactElement)`          | -       | Allows you to replace the component's HTML element&#xA;with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render. |
 
 **Panel Data Attributes:**
 
-| Attribute           | Type     | Description                                  |
-| :------------------ | :------- | :------------------------------------------- |
-| data-open           | -        | Present when the accordion panel is open.    |
-| data-orientation    | -        | Indicates the orientation of the accordion.  |
-| data-disabled       | -        | Present when the accordion item is disabled. |
-| data-index          | `number` | Indicates the index of the accordion item.   |
-| data-starting-style | -        | Present when the panel begins animating in.  |
-| data-ending-style   | -        | Present when the panel is animating out.     |
-
-**Panel CSS Variables:**
-
-| Variable                   | Type     | Description                   |
-| :------------------------- | :------- | :---------------------------- |
-| `--accordion-panel-height` | `number` | The accordion panel's height. |
-| `--accordion-panel-width`  | `number` | The accordion panel's width.  |
+| Attribute     | Type     | Description                                  |
+| :------------ | :------- | :------------------------------------------- |
+| data-open     | -        | Present when the accordion panel is open.    |
+| data-disabled | -        | Present when the accordion item is disabled. |
+| data-index    | `number` | Indicates the index of the accordion item.   |
 
 ### Panel.Props
 
@@ -325,28 +220,12 @@ Re-export of [Panel](#panel) props.
 
 ```typescript
 type AccordionPanelState = {
-  /** The transition status of the component. */
-  transitionStatus: TransitionStatus;
-  /** Whether the accordion item's panel is currently hidden. */
-  hidden: boolean;
   /** The item index. */
   index: number;
-  /** Whether the component is open. */
-  open: boolean;
-  /** The current value. */
-  value: any[];
   /** Whether the component should ignore user interaction. */
   disabled: boolean;
-  /**
-   * The component orientation.
-   *
-   * Deprecated following the [APG guidance update](https://github.com/w3c/aria-practices/pull/3434)
-   * to remove roving focus.
-   *
-   * This state no longer affects keyboard focus behavior.
-   * @deprecated
-   */
-  orientation: Orientation;
+  /** Whether the component is open. */
+  open: boolean;
 };
 ```
 
@@ -358,22 +237,13 @@ type AccordionPanelState = {
 type AccordionValue<Value = any> = Value[];
 ```
 
-## External Types
-
-### Orientation
-
-```typescript
-type Orientation = 'horizontal' | 'vertical';
-```
-
 ## Export Groups
 
 - `Accordion.Root`: `Accordion.Root`, `Accordion.Root.Value`, `Accordion.Root.State`, `Accordion.Root.Props`, `Accordion.Root.ChangeEventReason`, `Accordion.Root.ChangeEventDetails`
 - `Accordion.Item`: `Accordion.Item`, `Accordion.Item.State`, `Accordion.Item.Props`, `Accordion.Item.ChangeEventReason`, `Accordion.Item.ChangeEventDetails`
-- `Accordion.Header`: `Accordion.Header`, `Accordion.Header.State`, `Accordion.Header.Props`
 - `Accordion.Trigger`: `Accordion.Trigger`, `Accordion.Trigger.State`, `Accordion.Trigger.Props`
 - `Accordion.Panel`: `Accordion.Panel`, `Accordion.Panel.State`, `Accordion.Panel.Props`
-- `Default`: `AccordionValue`, `AccordionRootState`, `AccordionRootProps`, `AccordionRootChangeEventReason`, `AccordionRootChangeEventDetails`, `AccordionItemState`, `AccordionItemProps`, `AccordionItemChangeEventReason`, `AccordionItemChangeEventDetails`, `AccordionHeaderState`, `AccordionHeaderProps`, `AccordionTriggerState`, `AccordionTriggerProps`, `AccordionPanelState`, `AccordionPanelProps`
+- `Default`: `AccordionValue`, `AccordionRootState`, `AccordionRootProps`, `AccordionRootChangeEventReason`, `AccordionRootChangeEventDetails`, `AccordionItemState`, `AccordionItemProps`, `AccordionItemChangeEventReason`, `AccordionItemChangeEventDetails`, `AccordionTriggerState`, `AccordionTriggerProps`, `AccordionPanelState`, `AccordionPanelProps`
 
 ## Canonical Types
 
@@ -387,8 +257,6 @@ Maps `Canonical`: `Alias` — Use Canonical when its namespace is already import
 - `Accordion.Item.Props`: `AccordionItemProps`
 - `Accordion.Item.ChangeEventReason`: `AccordionItemChangeEventReason`
 - `Accordion.Item.ChangeEventDetails`: `AccordionItemChangeEventDetails`
-- `Accordion.Header.State`: `AccordionHeaderState`
-- `Accordion.Header.Props`: `AccordionHeaderProps`
 - `Accordion.Trigger.State`: `AccordionTriggerState`
 - `Accordion.Trigger.Props`: `AccordionTriggerProps`
 - `Accordion.Panel.State`: `AccordionPanelState`

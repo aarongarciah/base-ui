@@ -110,6 +110,44 @@ If your content is flexible, you can use the `max-height` property on `.Popup` t
 
 Native scrollbars are visible while transitioning content, so we recommend using the [Scroll Area](/react/components/scroll-area) component instead of native scrollbars to keep them hidden, which also allows the `Arrow` to be centered correctly.
 
+### Labeling the navigation landmarks
+
+`<NavigationMenu.Root>` renders a `<nav>` landmark, and because `<NavigationMenu.Popup>` is portaled outside of it, the popup renders a second `<nav>` landmark so its links remain part of a navigation region. Without accessible names, both appear as indistinguishable "navigation" entries in a screen reader's landmark list.
+
+Give each landmark a name that says what it navigates. Don't include the word "navigation" in the name—the landmark role already announces it:
+
+```tsx title="Labeling the menu bar and its popup"
+const [value, setValue] = React.useState<string | null>(null);
+
+return (
+  <NavigationMenu.Root aria-label="Main" value={value} onValueChange={setValue}>
+    {/* ... */}
+    <NavigationMenu.Portal>
+      <NavigationMenu.Positioner>
+        {/* @highlight */}
+        <NavigationMenu.Popup aria-label={value ?? undefined}>
+          <NavigationMenu.Viewport />
+        </NavigationMenu.Popup>
+      </NavigationMenu.Positioner>
+    </NavigationMenu.Portal>
+  </NavigationMenu.Root>
+);
+```
+
+The popup is shared by every item, so its name should follow the open item—controlling the menu's `value` and passing it to `aria-label` keeps the landmark name in sync with the visible content. If the popup content renders a visible heading, point `aria-labelledby` at that heading's `id` instead of duplicating its text in an `aria-label`.
+
+## Accessibility
+
+- **Landmarks**: the top-level `<NavigationMenu.Root>` renders a `<nav>` landmark; because `<NavigationMenu.Popup>` is portaled outside of it, it renders a second `<nav>` landmark. See [Labeling the navigation landmarks](#labeling-the-navigation-landmarks) above for how to name each one.
+- **Keyboard interactions**:
+  - <kbd>ArrowLeft</kbd> / <kbd>ArrowRight</kbd> (horizontal) or <kbd>ArrowUp</kbd> /
+    <kbd>ArrowDown</kbd> (vertical) — move focus between top-level triggers.
+  - <kbd>Enter</kbd> / <kbd>Space</kbd>, or the arrow key perpendicular to the trigger bar — opens
+    the focused trigger's panel.
+  - Inside an open panel, arrow keys move among links and nested triggers, and <kbd>Tab</kbd> moves forward through the content before leaving the menu.
+  - <kbd>Escape</kbd> — closes the open panel and returns focus to its trigger.
+- **ARIA attributes**: each trigger carries `aria-expanded` and `aria-controls` (while its panel is open); the current page's link carries `aria-current="page"` via the `active` prop.
+
 ## API reference
 
 import { TypesNavigationMenu } from './types';
