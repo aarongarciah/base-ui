@@ -146,12 +146,7 @@ The native `disabled` attribute removes a `<button>` from the tab order **and** 
 <button type="submit">Submit</button>
 
 <!-- Non-submit control — focusable, announced as unavailable, action suppressed in JS -->
-<button
-  type="button"
-  aria-label="Scroll to next"
-  aria-disabled="true"
-  onclick="scrollNext()"
->
+<button type="button" aria-label="Scroll to next" aria-disabled="true" onclick="scrollNext()">
   <svg aria-hidden="true">...</svg>
 </button>
 ```
@@ -165,9 +160,7 @@ A toggle button with `aria-expanded` already announces its state — "Menu, butt
 <button aria-expanded="false" aria-label="Open menu">...</button>
 
 <!-- Do — constant name; aria-expanded carries open/closed -->
-<button aria-expanded="false" aria-controls="menu" aria-label="Menu">
-  ...
-</button>
+<button aria-expanded="false" aria-controls="menu" aria-label="Menu">...</button>
 ```
 
 ### Icon-Only Controls Need an Accessible Name
@@ -248,9 +241,7 @@ Folding a hint into the name breaks three ways: `aria-label` overrides inner con
 </button>
 
 <!-- Do — clean name, hint as a description -->
-<a href="..." target="_blank" rel="noopener" aria-describedby="new-tab-hint"
-  >Share on Facebook</a
->
+<a href="..." target="_blank" rel="noopener" aria-describedby="new-tab-hint">Share on Facebook</a>
 
 <!-- Render a repeated hint once, reference it everywhere by id -->
 <span id="new-tab-hint" hidden>opens in a new tab</span>
@@ -312,10 +303,7 @@ Use native `<dialog>` with `showModal()`. Focus trapping and Escape key handling
   <button type="button" onclick="this.closest('dialog').close()">Close</button>
 </dialog>
 
-<button
-  type="button"
-  onclick="document.getElementById('my-dialog').showModal()"
->
+<button type="button" onclick="document.getElementById('my-dialog').showModal()">
   Open dialog
 </button>
 ```

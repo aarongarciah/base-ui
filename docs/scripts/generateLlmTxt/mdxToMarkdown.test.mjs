@@ -28,7 +28,9 @@ describe('mdxToMarkdown', () => {
 
     // Verify extracted metadata
     expect(result.title).toBe('Accordion');
-    expect(result.subtitle).toBe('A set of collapsible panels built on native disclosure elements.');
+    expect(result.subtitle).toBe(
+      'A set of collapsible panels built on native disclosure elements.',
+    );
     expect(result.description).toBe(
       'A high-quality, unstyled React accordion component built on the native details and summary elements.',
     );
