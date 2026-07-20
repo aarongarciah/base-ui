@@ -184,7 +184,7 @@ type AlertDialogBackdropState = {
 ### Popup
 
 A container for the dialog contents.
-Renders a `<div>` element.
+Renders a native `<dialog>` element.
 
 **Popup Props:**
 

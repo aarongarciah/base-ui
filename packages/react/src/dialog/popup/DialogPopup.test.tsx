@@ -9,7 +9,7 @@ describe('<Dialog.Popup />', () => {
   const { render } = createRenderer();
 
   describeConformance(<Dialog.Popup />, () => ({
-    refInstanceof: window.HTMLDivElement,
+    refInstanceof: window.HTMLDialogElement,
     render: (node) => {
       return render(
         <Dialog.Root open modal={false}>
@@ -653,12 +653,17 @@ describe('<Dialog.Popup />', () => {
 
       await user.click(screen.getByText('Open'));
 
+      // A native modal `<dialog>` traps focus behind an inert background, so `initialFocus` pointing
+      // outside the popup is ignored and focus stays inside.
       await waitFor(() => {
-        expect(screen.getByTestId('initial-outside')).toHaveFocus();
+        expect(screen.getByRole('dialog').contains(document.activeElement)).toBe(true);
       });
+      expect(screen.getByTestId('initial-outside')).not.toHaveFocus();
 
       await user.click(screen.getByText('Close'));
 
+      // `finalFocus` is honored on close, once the dialog leaves the top layer and the background
+      // is interactive again.
       await waitFor(() => {
         expect(screen.getByTestId('final-outside')).toHaveFocus();
       });
@@ -687,17 +692,23 @@ describe('<Dialog.Popup />', () => {
 
       const { user } = await render(<TestComponent />);
 
-      await user.click(screen.getByText('Open'));
+      const trigger = screen.getByText('Open');
+      await user.click(trigger);
 
+      // A native modal `<dialog>` traps focus behind an inert background, so `initialFocus` pointing
+      // outside the popup is ignored and focus stays inside.
       await waitFor(() => {
-        expect(screen.getByTestId('initial-outside')).toHaveFocus();
+        expect(screen.getByRole('dialog').contains(document.activeElement)).toBe(true);
       });
+      expect(screen.getByTestId('initial-outside')).not.toHaveFocus();
 
       await user.click(screen.getByText('Close'));
 
+      // With no `finalFocus`, closing returns focus to the trigger rather than the outside element.
       await waitFor(() => {
-        expect(screen.getByTestId('final-outside')).not.toHaveFocus();
+        expect(trigger).toHaveFocus();
       });
+      expect(screen.getByTestId('final-outside')).not.toHaveFocus();
     });
 
     it('uses default behavior when finalFocus returns null', async () => {

@@ -95,7 +95,7 @@ export function SearchBar({
 }: SearchBarProps) {
   const [dialogOpen, setDialogOpen] = React.useState(handle.isOpen);
   const inputRef = React.useRef<HTMLInputElement>(null);
-  const popupRef = React.useRef<HTMLDivElement>(null);
+  const popupRef = React.useRef<HTMLDialogElement>(null);
   const ga = useGoogleAnalytics();
 
   // Search session tracking

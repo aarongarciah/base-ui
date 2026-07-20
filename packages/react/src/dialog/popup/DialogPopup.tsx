@@ -1,12 +1,16 @@
 'use client';
 import * as React from 'react';
 import { InteractionType } from '@base-ui/utils/useEnhancedClickHandler';
+import { useIsoLayoutEffect } from '@base-ui/utils/useIsoLayoutEffect';
 import { FloatingFocusManager } from '../../floating-ui-react';
+import { getTarget } from '../../floating-ui-react/utils';
 import { useDialogRootContext } from '../root/DialogRootContext';
 import { useRenderElement } from '../../internals/useRenderElement';
 import { type BaseUIComponentProps } from '../../internals/types';
 import { type TransitionStatus } from '../../internals/useTransitionStatus';
 import { type StateAttributesMapping } from '../../internals/getStateAttributesProps';
+import { createChangeEventDetails } from '../../internals/createBaseUIEventDetails';
+import { REASONS } from '../../internals/reasons';
 import { popupStateMapping as baseMapping } from '../../utils/popupStateMapping';
 import { transitionStatusMapping } from '../../internals/stateAttributesMapping';
 import { DialogPopupCssVars } from './DialogPopupCssVars';
@@ -25,14 +29,26 @@ const stateAttributesMapping: StateAttributesMapping<DialogPopupState> = {
 };
 
 /**
+ * Whether the current environment implements the native `<dialog>` element methods. jsdom and older
+ * browsers do not, in which case the popup falls back to the JavaScript-driven behavior below.
+ */
+function supportsNativeDialog(): boolean {
+  return (
+    typeof window !== 'undefined' &&
+    typeof window.HTMLDialogElement === 'function' &&
+    typeof window.HTMLDialogElement.prototype.showModal === 'function'
+  );
+}
+
+/**
  * A container for the dialog contents.
- * Renders a `<div>` element.
+ * Renders a native `<dialog>` element.
  *
  * Documentation: [Base UI Dialog](https://base-ui.com/react/components/dialog)
  */
 export const DialogPopup = React.forwardRef(function DialogPopup(
   componentProps: DialogPopup.Props,
-  forwardedRef: React.ForwardedRef<HTMLDivElement>,
+  forwardedRef: React.ForwardedRef<HTMLDialogElement>,
 ) {
   const { render, className, style, finalFocus, initialFocus, ...elementProps } = componentProps;
 
@@ -57,6 +73,13 @@ export const DialogPopup = React.forwardRef(function DialogPopup(
 
   useDialogPortalContext();
 
+  // When native `<dialog>` is available, a fully modal dialog delegates the top layer, `::backdrop`,
+  // background `inert`, and the Tab focus trap to the browser via `showModal()`. Non-modal and
+  // `'trap-focus'` dialogs — as well as unsupported environments — keep relying on the JavaScript
+  // layer (`FloatingFocusManager`, the internal backdrop, and `useDismiss`).
+  const canUseNativeDialog = React.useMemo(supportsNativeDialog, []);
+  const nativeModalActive = canUseNativeDialog && modal === true;
+
   useOpenChangeComplete({
     open,
     ref: store.context.popupRef,
@@ -74,6 +97,36 @@ export const DialogPopup = React.forwardRef(function DialogPopup(
 
   const setPopupElement = store.useStateSetter('popupElement');
 
+  // Drive the native modal from the floating context's `floatingElement` — the exact signal the focus
+  // manager keys its "element focused before opening" capture on. Sharing the signal makes this effect
+  // run on the same render, and as a parent layout effect it runs *after* the manager's (child) capture,
+  // so `showModal()` can't move focus first and corrupt the return-focus target. Keying off `mounted`
+  // keeps the element in the top layer through any exit animation, then closes it on unmount.
+  const floatingElement = floatingRootContext.useState('floatingElement');
+  useIsoLayoutEffect(() => {
+    const dialog = floatingElement as HTMLDialogElement | null;
+    if (modal !== true || !mounted || dialog == null) {
+      return undefined;
+    }
+
+    if (canUseNativeDialog) {
+      if (!dialog.open) {
+        dialog.showModal();
+      }
+      return () => {
+        if (dialog.open) {
+          dialog.close();
+        }
+      };
+    }
+
+    // Fallback: make the dialog visible without the top layer where `showModal()` is unavailable.
+    dialog.setAttribute('open', '');
+    return () => {
+      dialog.removeAttribute('open');
+    };
+  }, [mounted, modal, canUseNativeDialog, floatingElement]);
+
   const state: DialogPopupState = {
     open,
     nested,
@@ -81,21 +134,49 @@ export const DialogPopup = React.forwardRef(function DialogPopup(
     nestedDialogOpen,
   };
 
-  const element = useRenderElement('div', componentProps, {
+  const element = useRenderElement('dialog', componentProps, {
     state,
     props: [
       rootPopupProps,
       {
         id: popupId,
+        // The native `<dialog>` already exposes the `dialog` role; only override it for alert dialogs.
+        role: role === 'alertdialog' ? 'alertdialog' : undefined,
         'aria-labelledby': titleElementId ?? undefined,
         'aria-describedby': descriptionElementId ?? undefined,
-        role,
+        // Non-modal (and `'trap-focus'`) dialogs are shown via the `open` attribute, which — unlike
+        // `show()`/`showModal()` — has no focus side effects, leaving focus fully to the JS layer.
+        // Modal dialogs are opened imperatively (see the effect above), so React must not own `open`.
+        open: modal !== true && mounted ? true : undefined,
         ...FOCUSABLE_POPUP_PROPS,
         hidden: !mounted,
         onKeyDown(event: React.KeyboardEvent) {
           if (COMPOSITE_KEYS.has(event.key)) {
             event.stopPropagation();
           }
+        },
+        onCancel(event: React.SyntheticEvent) {
+          if (!nativeModalActive) {
+            return;
+          }
+          // Route the browser's Escape request through the store so controlled state and exit
+          // animations stay in sync, instead of letting the browser close the element immediately.
+          event.preventDefault();
+          store.setOpen(false, createChangeEventDetails(REASONS.escapeKey));
+        },
+        onClick(event: React.MouseEvent) {
+          if (!nativeModalActive || disablePointerDismissal) {
+            return;
+          }
+          // A click whose target is the `<dialog>` element itself lands on its `::backdrop`; clicks
+          // on the contents target descendant elements instead.
+          if (getTarget(event.nativeEvent) !== event.currentTarget) {
+            return;
+          }
+          if (!store.context.outsidePressEnabledRef.current) {
+            return;
+          }
+          store.setOpen(false, createChangeEventDetails(REASONS.outsidePress));
         },
         style: {
           [DialogPopupCssVars.nestedDialogs]: nestedOpenDialogCount,
@@ -115,6 +196,9 @@ export const DialogPopup = React.forwardRef(function DialogPopup(
       closeOnFocusOut={!disablePointerDismissal}
       initialFocus={resolvedInitialFocus}
       returnFocus={finalFocus}
+      // Kept authoritative for resolving initial/final focus. For a native modal dialog the browser's
+      // `inert` background neutralizes this Tab trap (native owns it), but the focus-manager's
+      // return-focus semantics must be preserved, so its `modal` value stays unchanged.
       modal={modal !== false}
       restoreFocus="popup"
     >
@@ -123,7 +207,7 @@ export const DialogPopup = React.forwardRef(function DialogPopup(
   );
 });
 
-export interface DialogPopupProps extends BaseUIComponentProps<'div', DialogPopupState> {
+export interface DialogPopupProps extends BaseUIComponentProps<'dialog', DialogPopupState> {
   /**
    * Determines the element to focus when the dialog is opened.
    * By default, focus moves to the first tabbable element inside the popup, except when the dialog
